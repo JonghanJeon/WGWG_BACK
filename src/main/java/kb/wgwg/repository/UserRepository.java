@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "select * from User where email = ?1", nativeQuery = true)
-    List<User> fineByEmail(String email);
+    @Query(value = "select * from USER_ENTITY where email = ?1", nativeQuery = true)
+    User fineByEmail(String email);
 
-    @Query(value = "select * from User where nickName = ?1", nativeQuery = true)
-    List<User> findByNickName(String nickName);
+    @Query(value = "select * from USER_ENTITY where nick_name = ?1", nativeQuery = true)
+    User findByNickName(String nickName);
 }

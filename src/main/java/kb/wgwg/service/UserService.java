@@ -33,8 +33,8 @@ public class UserService {
      * @return boolean
      */
     public boolean checkEmailDup(String email){
-        List<User> list = userRepository.fineByEmail(email);
-        if(list != null) // email이 사용중일 경우
+        User user = userRepository.fineByEmail(email);
+        if(user != null) // email이 사용중일 경우
             return true;
         return false;
     }
@@ -45,18 +45,26 @@ public class UserService {
      * @return boolean
      */
     public boolean checkNickNameDup(String nickName){
-        List<User> list = userRepository.findByNickName(nickName);
-        if(list != null) // nickName 이 사용중일 경우
+        User user = userRepository.findByNickName(nickName);
+        if(user != null) // nickName 이 사용중일 경우
             return true;
         return false;
     }
 
     /**
-     * User테이블에 등록
+     * User테이블에 등록 : 성공시 true
      * @param dto
+     * @return boolean
      */
-    public void insertUser(UserInsertRequestDTO dto){
+    public boolean insertUser(UserInsertRequestDTO dto){
         User user = modelMapper.map(dto, User.class);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("userService "+ e.getMessage());
+        }
+        return false;
     }
 }
