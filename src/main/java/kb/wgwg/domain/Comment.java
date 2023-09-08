@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "\"comment\"")
 @Getter
 @ToString
 @DynamicInsert
