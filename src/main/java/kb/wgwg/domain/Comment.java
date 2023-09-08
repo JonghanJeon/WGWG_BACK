@@ -10,10 +10,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,37 +19,30 @@ import java.util.List;
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SequenceGenerator(
-        name = "ARTICLE_ENTITY_SEQUENCE_GENERATOR",
-        sequenceName = "ARTICLE_ENTITY_SEQ",
+        name = "COMMENT_ENTITY_SEQUENCE_GENERATOR",
+        sequenceName = "COMMENT_ENTITY_SEQ",
         initialValue = 1,
         allocationSize = 1
 )
-public class Article {
-    // 게시글번호
+public class Comment {
+    // 댓글 고유 식별 번호
     @Id
     @Column(updatable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARTICLE_ENTITY_SEQUENCE_GENERATOR")
-    private Long articleSeq;
-
-    // 제목
-    @Column(nullable = false)
-    private String title;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMMENT_ENTITY_SEQUENCE_GENERATOR")
+    private Long commentSeq;
 
     // 내용
     @Column(nullable = false)
     private String content;
 
-    // 카테고리
-    private String category;
-
     // 등록일
-    @CreationTimestamp
     @Column(name = "INSERT_DATE")
+    @CreationTimestamp
     private LocalDateTime insertDate;
 
     // 수정일
-    @UpdateTimestamp
     @Column(name = "UPDATE_DATE")
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 
     // 작성자
@@ -60,7 +50,8 @@ public class Article {
     @JoinColumn(name = "writer_seq") // 외래키 컬럼 이름 writer_seq
     private User writer;
 
-    // 댓글
-    @OneToMany(mappedBy = "parentArticle", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Comment> comments = new ArrayList<>();
+    // 게시글
+    @ManyToOne(fetch = FetchType.LAZY) // 지연로딩
+    @JoinColumn(name = "article_seq") // 외래키 컬럼 이름 article_seq
+    private Article parentArticle;
 }
