@@ -18,4 +18,11 @@ public class UserController {
         UserReadResponseDTO result = userService.readById(requestDTO);
         return ResponseEntity.ok(result);
     }
+
+    @DeleteMapping(value = "/deleteUser/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+
+        return ResponseEntity.ok().build();
+    }
 }
