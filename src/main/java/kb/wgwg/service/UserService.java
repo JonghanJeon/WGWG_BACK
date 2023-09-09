@@ -6,7 +6,6 @@ import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -27,8 +26,4 @@ public class UserService {
         return result;
     }
 
-    @Transactional
-    public void deleteUser(Long id) {
-        userRepository.deleteByUserSeq(id);
-    }
 }
