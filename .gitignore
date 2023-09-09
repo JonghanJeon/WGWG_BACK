@@ -346,7 +346,4 @@ $RECYCLE.BIN/
 *.properties
 *.yml
 
-#Test
-test/java/kb/wgwg/
-
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,intellij+all,windows,macos,jetbrains
