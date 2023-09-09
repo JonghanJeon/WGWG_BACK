@@ -35,4 +35,14 @@ public class UserDTO {
             this.userName = userName;
         }
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class UserUpdateDTO{
+        private Long userSeq;
+        private String password;
+    }
 }
