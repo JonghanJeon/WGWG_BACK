@@ -12,6 +12,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+
+import static kb.wgwg.common.ResponseMessage.INTERNAL_SERVER_ERROR;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +34,7 @@ public class ArticleController {
         } catch (Exception e){
             result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
             result.setSuccess(false);
-            result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            result.setMessage(INTERNAL_SERVER_ERROR);
 
             return ResponseEntity.internalServerError().body(result);
         }
@@ -50,12 +54,24 @@ public class ArticleController {
 
     @GetMapping(value = "/read/{id}")
     public ResponseEntity<BaseResponseDTO> readArticle(@PathVariable Long id) {
-        ArticleReadResponseDTO result = service.findArticleById(id);
         BaseResponseDTO<ArticleReadResponseDTO> response = new BaseResponseDTO<>();
-        response.setMessage("성공적으로 게시글을 불러왔습니다.");
-        response.setStatus(200);
-        response.setSuccess(true);
-        response.setData(result);
+
+        try {
+            ArticleReadResponseDTO result = service.findArticleById(id);
+            response.setMessage("성공적으로 게시글을 불러왔습니다.");
+            response.setStatus(200);
+            response.setSuccess(true);
+            response.setData(result);
+
+        } catch (EntityNotFoundException e) {
+            response.setMessage(e.getMessage());
+            response.setStatus(404);
+            response.setSuccess(false);
+        } catch (Exception e) {
+            response.setMessage(INTERNAL_SERVER_ERROR);
+            response.setStatus(500);
+            response.setSuccess(false);
+        }
 
         return ResponseEntity.ok(response);
     }
@@ -63,12 +79,24 @@ public class ArticleController {
     @PostMapping(value = "/read")
     public ResponseEntity<BaseResponseDTO> readArticlesByCategory(@RequestBody ArticleListRequestDTO dto,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
-        Page<ArticleListResponseDTO> result = service.findArticlesByCategory(dto.getCategory(), pageable);
         BaseResponseDTO<Page<ArticleListResponseDTO>> response = new BaseResponseDTO<>();
-        response.setMessage("성공적으로 게시글을 불러왔습니다.");
-        response.setStatus(200);
-        response.setSuccess(true);
-        response.setData(result);
+
+        try {
+            Page<ArticleListResponseDTO> result = service.findArticlesByCategory(dto.getCategory(), pageable);
+            response.setMessage("성공적으로 게시글을 불러왔습니다.");
+            response.setStatus(200);
+            response.setSuccess(true);
+            response.setData(result);
+
+        } catch (EntityNotFoundException e) {
+            response.setMessage(e.getMessage());
+            response.setStatus(404);
+            response.setSuccess(false);
+        } catch (Exception e) {
+            response.setMessage(INTERNAL_SERVER_ERROR);
+            response.setStatus(500);
+            response.setSuccess(false);
+        }
 
         return ResponseEntity.ok(response);
     }
