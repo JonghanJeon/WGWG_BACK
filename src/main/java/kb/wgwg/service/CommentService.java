@@ -14,6 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -56,6 +61,26 @@ public class CommentService {
 
     public int deleteComment(Long id){
         return commentRepository.deleteByCommentSeq(id);
+    }
+
+    public List<CommentReadResponseDTO> readComment(Long articleSeq){
+        Article article = articleRepository.findById(articleSeq).orElseThrow(
+                () -> new EntityNotFoundException("해당 게시글을 찾을 수 없습니다.")
+        );
+
+         List<Object[]> rawComments = commentRepository.findCommentsByArticleSeq(articleSeq);
+
+         List<CommentReadResponseDTO> result = new ArrayList<>();
+         for(Object[] r : rawComments){
+             CommentReadResponseDTO dto = new CommentReadResponseDTO();
+             dto.setCommentSeq(((BigDecimal) r[0]).longValue());
+             dto.setWriterSeq(((BigDecimal) r[1]).longValue());
+             dto.setNickName((String) r[2]);
+             dto.setContent((String) r[3]);
+             dto.setDate(((Timestamp) r[4]).toLocalDateTime().withNano(0));
+             result.add(dto);
+         }
+         return result;
     }
 
 }

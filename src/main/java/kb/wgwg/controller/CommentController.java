@@ -7,14 +7,10 @@ import kb.wgwg.common.ResponseMessage;
 import kb.wgwg.common.StatusCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -82,4 +78,27 @@ public class CommentController {
         }
     }
 
+    @GetMapping("/read/{articleSeq}")
+    public ResponseEntity readComments(@PathVariable Long articleSeq){
+        BaseResponseDTO result = new BaseResponseDTO();
+        try {
+            List<CommentReadResponseDTO> comments = commentService.readComment(articleSeq);
+            result.setStatus(StatusCode.OK);
+            result.setMessage(ResponseMessage.READ_COMMENT_SUCCESS);
+            result.setSuccess(true);
+            result.setData(comments);
+            return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException e){
+            result.setStatus(StatusCode.BAD_REQUEST);
+            result.setMessage(ResponseMessage.NOT_FOUND_ARTICLE);
+            result.setSuccess(false);
+            return ResponseEntity.badRequest().body(result);
+        } catch (Exception e){
+            e.printStackTrace();
+            result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            result.setSuccess(false);
+            return ResponseEntity.internalServerError().body(result);
+        }
+    }
 }
