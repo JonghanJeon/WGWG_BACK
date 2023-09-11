@@ -29,7 +29,7 @@ public class UserController {
     public ResponseEntity<BaseResponseDTO> readById(@RequestBody UserReadRequestDTO requestDTO) {
         BaseResponseDTO<UserReadResponseDTO> result2 = new BaseResponseDTO<>();
         UserReadResponseDTO result = userService.readById(requestDTO);
-        result2.setMessage("실험");
+        result2.setMessage("성공");
         result2.setStatus(200);
         result2.setSuccess(true);
         result2.setData(result);
