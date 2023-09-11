@@ -2,14 +2,15 @@ package kb.wgwg.controller;
 
 import kb.wgwg.common.ResponseMessage;
 import kb.wgwg.common.StatusCode;
+import kb.wgwg.dto.ArticleDTO.*;
 import kb.wgwg.dto.BaseResponseDTO;
+import kb.wgwg.dto.UserDTO;
 import kb.wgwg.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,4 +34,17 @@ public class ArticleController {
             return ResponseEntity.internalServerError().body(result);
         }
     }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity updateArticle(@RequestBody ArticleUpdateDTO dto) {
+        BaseResponseDTO<ArticleUpdateDTO> result2 = new BaseResponseDTO<>();
+        ArticleUpdateDTO result = service.updateArticle(dto);
+        result2.setMessage("성공");
+        result2.setStatus(200);
+        result2.setSuccess(true);
+        result2.setData(result);
+        return ResponseEntity.ok(result2);
+
+    }
+
 }

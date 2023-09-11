@@ -1,9 +1,6 @@
 package kb.wgwg.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -63,4 +60,24 @@ public class Article {
     // 댓글
     @OneToMany(mappedBy = "parentArticle", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Comment> comments = new ArrayList<>();
+
+    @Builder
+    public Article(String title, String content, String category, User writer) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+        this.writer = writer;
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
+    public void updateCategory(String category) {
+        this.category = category;
+    }
 }
