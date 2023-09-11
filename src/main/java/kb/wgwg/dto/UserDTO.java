@@ -7,6 +7,34 @@ public class UserDTO {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class UserLoginRequestDTO {
+        private String email;
+        private String password;
+
+        @Builder
+        public UserLoginRequestDTO(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class UserLoginResponseDTO {
+        private Long userSeq;
+        private String nickName;
+
+        @Builder
+        public UserLoginResponseDTO(Long userSeq, String nickName){
+            this.userSeq = userSeq;
+            this.nickName = nickName;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class UserReadRequestDTO {
 
         private Long userSeq;
