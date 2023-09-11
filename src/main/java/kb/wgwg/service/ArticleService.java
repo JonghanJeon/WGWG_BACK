@@ -1,8 +1,10 @@
 package kb.wgwg.service;
 
 import kb.wgwg.domain.Article;
+import kb.wgwg.domain.User;
 import kb.wgwg.dto.ArticleDTO.*;
 import kb.wgwg.repository.ArticleRepository;
+import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import java.util.function.Function;
 
@@ -19,6 +22,25 @@ import java.util.function.Function;
 public class ArticleService {
     private final ModelMapper modelMapper;
     private final ArticleRepository repository;
+    private final UserRepository userRepository;
+    private final EntityManager entityManager;
+
+    public ArticleInsertResponseDTO insertArticle(ArticleInsertRequestDTO dto){
+        User user  = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException("해당 유저를 찾을 수 없습니다.")
+        );
+
+        Article article = Article.builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .category(dto.getCategory())
+                .writer(user).build();
+
+        Article savedArticle = repository.save(article);
+        entityManager.flush(); //insertDate
+        ArticleInsertResponseDTO result = modelMapper.map(savedArticle, ArticleInsertResponseDTO.class);
+        return result;
+    }
 
 
     public int deleteArticle(Long id){
