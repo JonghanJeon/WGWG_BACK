@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Table(name = "user_entity")
 @Getter
-@ToString
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,7 +30,7 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, unique = true)
@@ -40,11 +39,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<Article> articles = new ArrayList<>();
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Article> articles = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Comment> comments = new ArrayList<>();
 
     @Builder
     public User(String userName, String email, String nickName, String password) {

@@ -63,4 +63,24 @@ public class UserDTO {
             this.userName = userName;
         }
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class UserInsertRequestDTO {
+        private String userName;
+
+        private String email;
+
+        private String nickName;
+
+        private String password;
+        @Builder
+        public UserInsertRequestDTO(String userName, String email, String nickName, String password) {
+            this.email = email;
+            this.nickName = nickName;
+            this.userName = userName;
+            this.password = password;
+        }
+    }
 }
