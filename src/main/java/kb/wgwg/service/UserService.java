@@ -17,6 +17,17 @@ public class UserService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
+    public UserLoginResponseDTO login(UserLoginRequestDTO dto) {
+
+        User theUser = userRepository.findByEmail(dto.getEmail());
+        System.out.println(theUser);
+        if(theUser == null || !theUser.getPassword().equals(dto.getPassword())) throw new EntityNotFoundException();
+
+        UserLoginResponseDTO result = modelMapper.map(theUser, UserLoginResponseDTO.class);
+        return result;
+    }
+
+
     public UserReadResponseDTO readById(UserReadRequestDTO dto) {
         Optional<User> theUser = userRepository.findById(dto.getUserSeq());
         if (theUser.isEmpty()) throw new EntityNotFoundException();
