@@ -1,9 +1,6 @@
 package kb.wgwg.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -55,4 +52,11 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY) // 지연로딩
     @JoinColumn(name = "article_seq") // 외래키 컬럼 이름 article_seq
     private Article parentArticle;
+
+    @Builder
+    public Comment(String content, User writer, Article parentArticle) {
+        this.content = content;
+        this.writer = writer;
+        this.parentArticle = parentArticle;
+    }
 }
