@@ -3,6 +3,7 @@ package kb.wgwg.dto;
 import kb.wgwg.domain.User;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class CommentDTO {
@@ -41,5 +42,17 @@ public class CommentDTO {
     public static final class CommentUpdateDTO{
         private Long commentSeq;
         private String content;
+    }
+
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static final class CommentReadResponseDTO{
+        private Long commentSeq;
+        private Long writerSeq;
+        private String nickName;
+        private String content;
+        private LocalDateTime date;
     }
 }
