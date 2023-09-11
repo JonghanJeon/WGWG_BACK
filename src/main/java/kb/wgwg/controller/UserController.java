@@ -53,13 +53,13 @@ public class UserController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<?> insert(UserInsertRequestDTO dto){
+    public ResponseEntity<?> insert(@RequestBody UserInsertRequestDTO dto){
         if(userService.insertUser(dto))
             return ResponseEntity.ok().body("{\"status\": 200, \"success\": true, \"message\": \"회원가입 성공\"}");
         return ResponseEntity.status(400).body("{\"status\": 400, \"success\": false, \"message\": \"회원가입 실패\"}");
     }
 
-    @DeleteMapping(value = "/deleteUser/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
 

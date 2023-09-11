@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,7 +46,7 @@ public class UserService {
      * @return boolean
      */
     public boolean checkEmailDup(String email){
-        User user = userRepository.fineByEmail(email);
+        User user = userRepository.findByEmail(email);
         if(user != null) // email이 사용중일 경우
             return true;
         return false;
@@ -70,17 +69,18 @@ public class UserService {
      * @param dto
      * @return boolean
      */
-    public boolean insertUser(UserInsertRequestDTO dto){
+    public boolean insertUser(UserInsertRequestDTO dto) {
         User user = modelMapper.map(dto, User.class);
         try {
             userRepository.save(user);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("userService "+ e.getMessage());
+            System.out.println("userService " + e.getMessage());
         }
         return false;
-      
+    }
+
     public void deleteUser(Long id) {
         userRepository.deleteByUserSeq(id);
     }
