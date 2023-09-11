@@ -24,5 +24,7 @@ public class CommentService {
 
         return commentRepository.updateCommentByCommentSeq(dto.getCommentSeq(), dto.getContent());
     }
-
+    public int deleteComment(Long id){
+        return commentRepository.deleteByCommentSeq(id);
+    }
 }
