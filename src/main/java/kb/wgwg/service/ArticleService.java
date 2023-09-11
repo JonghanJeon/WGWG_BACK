@@ -21,8 +21,8 @@ public class ArticleService {
     private final ArticleRepository repository;
 
 
-    public void deleteArticle(Long id){
-        repository.deleteByArticleSeq(id);
+    public int deleteArticle(Long id){
+        return repository.deleteByArticleSeq(id);
     }
 
     public ArticleUpdateDTO updateArticle(ArticleUpdateDTO dto) {

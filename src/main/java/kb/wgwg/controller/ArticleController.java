@@ -22,15 +22,22 @@ import static kb.wgwg.common.ResponseMessage.INTERNAL_SERVER_ERROR;
 @RequestMapping(value = "/articles")
 public class ArticleController {
     private final ArticleService service;
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteArticle(@PathVariable Long id){
         BaseResponseDTO result = new BaseResponseDTO();
         try {
-            service.deleteArticle(id);
-            result.setStatus(StatusCode.OK);
-            result.setMessage(ResponseMessage.DELETE_ARTICLE);
-            result.setSuccess(true);
-            return ResponseEntity.ok(result);
+            if(service.deleteArticle(id) > 0){
+                result.setStatus(StatusCode.OK);
+                result.setMessage(ResponseMessage.DELETE_ARTICLE);
+                result.setSuccess(true);
+                return ResponseEntity.ok(result);
+            }
+            else{
+                result.setStatus(StatusCode.BAD_REQUEST);
+                result.setMessage(ResponseMessage.NOT_FOUND_ARTICLE);
+                result.setSuccess(false);
+                return ResponseEntity.badRequest().body(result);
+            }
         } catch (Exception e){
             result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
             result.setSuccess(false);

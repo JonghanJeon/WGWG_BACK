@@ -15,7 +15,7 @@ public class ResponseMessage {
 
     //게시판
     public static final String DELETE_ARTICLE = "게시글 삭제 성공";
-
+    public static final String NOT_FOUND_ARTICLE = "게시글을 찾을 수 없습니다.";
 
     //챌린지
 
