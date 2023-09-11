@@ -66,9 +66,12 @@ public class UserController {
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deleteUser(@PathVariable Long id) {
+        BaseResponseDTO<UserReadResponseDTO> result = new BaseResponseDTO<>();
         userService.deleteUser(id);
-
-        return ResponseEntity.ok().build();
+        result.setMessage("check");
+        result.setStatus(200);
+        result.setSuccess(true);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping(value = "/update")
