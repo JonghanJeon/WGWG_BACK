@@ -14,6 +14,7 @@ public class ResponseMessage {
     public static final String DELETE_USER = "회원 탈퇴 성공";
 
     //게시판
+    public static final String DELETE_ARTICLE = "게시글 삭제 성공";
 
 
     //챌린지
