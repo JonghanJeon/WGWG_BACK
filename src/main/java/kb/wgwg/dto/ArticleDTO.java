@@ -68,7 +68,7 @@ public class ArticleDTO {
 
         private LocalDateTime updateDate;
 
-        private User writer;
+        private String writer;
 
         private List<Comment> comments;
 
@@ -82,7 +82,7 @@ public class ArticleDTO {
             this.category = category;
             this.insertDate = insertDate;
             this.updateDate = updateDate;
-            this.writer = writer;
+            this.writer = writer.getNickName();
             this.comments = comments;
         }
     }
