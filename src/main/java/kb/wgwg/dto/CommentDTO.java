@@ -1,5 +1,14 @@
 package kb.wgwg.dto;
 
-public class CommentDTO {
+import lombok.*;
 
+public class CommentDTO {
+    @Setter
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static final class CommentUpdateDTO{
+        private Long commentSeq;
+        private String content;
+    }
 }
