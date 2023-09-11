@@ -1,16 +1,16 @@
 package kb.wgwg.controller;
 
-import kb.wgwg.common.ResponseMessage;
-import kb.wgwg.common.StatusCode;
 import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.dto.CommentDTO.*;
 import kb.wgwg.service.CommentService;
+import kb.wgwg.common.ResponseMessage;
+import kb.wgwg.common.StatusCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +20,19 @@ import javax.persistence.EntityNotFoundException;
 @RequiredArgsConstructor
 @RequestMapping(value = "/comments")
 public class CommentController {
-
     private final CommentService commentService;
+
+    @PostMapping("/insert")
+    public ResponseEntity<BaseResponseDTO> insertComment(@RequestBody CommentInsertRequestDTO dto) {
+        BaseResponseDTO<CommentInsertResponseDTO> result2 = new BaseResponseDTO<>();
+        CommentInsertResponseDTO result = commentService.insertComment(dto);
+        result2.setMessage("댓글 등록 완료");
+        result2.setStatus(200);
+        result2.setSuccess(true);
+        result2.setData(result);
+        return ResponseEntity.ok(result2);
+    }
+
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deleteComment(@PathVariable Long id) {
