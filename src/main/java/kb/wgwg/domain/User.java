@@ -39,11 +39,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<Article> articles = new ArrayList<>();
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Article> articles = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Comment> comments = new ArrayList<>();
 
     @Builder
     public User(String userName, String email, String nickName, String password) {

@@ -6,18 +6,21 @@ import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public UserReadResponseDTO readById(UserReadRequestDTO dto) {
         Optional<User> theUser = userRepository.findById(dto.getUserSeq());
         if (theUser.isEmpty()) throw new EntityNotFoundException();
@@ -66,5 +69,8 @@ public class UserService {
             System.out.println("userService "+ e.getMessage());
         }
         return false;
+      
+    public void deleteUser(Long id) {
+        userRepository.deleteByUserSeq(id);
     }
 }
