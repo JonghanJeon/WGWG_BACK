@@ -18,6 +18,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/articles")
 public class ArticleController {
     private final ArticleService service;
+
+    @PostMapping("/insert")
+    public ResponseEntity<BaseResponseDTO> insertArticle(@RequestBody ArticleInsertRequestDTO requestDTO){
+        BaseResponseDTO<ArticleInsertResponseDTO> result2 = new BaseResponseDTO<>();
+        ArticleInsertResponseDTO result = service.insertArticle(requestDTO);
+        result2.setMessage("게시글 등록 완료");
+        result2.setStatus(200);
+        result2.setSuccess(true);
+        result2.setData(result);
+        return ResponseEntity.ok(result2);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteArticle(@PathVariable Long id){
         BaseResponseDTO result = new BaseResponseDTO();
