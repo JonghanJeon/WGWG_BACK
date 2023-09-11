@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
-    void deleteByArticleSeq(Long articleSeq);
+    int deleteByArticleSeq(Long articleSeq);
 
     Page<Article> findAllByCategory(String category, Pageable pageable);
 }
