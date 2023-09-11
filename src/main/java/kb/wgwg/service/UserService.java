@@ -84,4 +84,8 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteByUserSeq(id);
     }
+
+    public void updatePassword(UserUpdateDTO dto) throws Exception {
+        userRepository.updateUserPassword(dto.getPassword(), dto.getUserSeq());
+    }
 }

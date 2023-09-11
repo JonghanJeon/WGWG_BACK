@@ -4,6 +4,7 @@ import kb.wgwg.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from USER_ENTITY where email = ?1", nativeQuery = true)
@@ -14,4 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     void deleteByUserSeq(Long userSeq);
+
+    @Modifying
+    @Query("UPDATE User u SET u.password = :newPassword WHERE u.userSeq = :userSeq")
+    void updateUserPassword(@Param("newPassword") String newPassword, @Param("userSeq") Long userSeq) throws Exception;
 }
