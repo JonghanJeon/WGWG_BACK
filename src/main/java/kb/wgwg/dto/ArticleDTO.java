@@ -13,6 +13,37 @@ public class ArticleDTO {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ArticleInsertRequestDTO {
+        private Long userSeq;
+        private String title;
+        private String content;
+        private String category;
+
+        @Builder
+        public ArticleInsertRequestDTO(Long userSeq) {
+            this.userSeq = userSeq;
+            this.title = title;
+            this.content = content;
+            this.category = category;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ArticleInsertResponseDTO {
+
+        private Long articleSeq;
+
+        @Builder
+        public ArticleInsertResponseDTO(long articleSeq) {
+            this.articleSeq = articleSeq;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
     @Builder
     public static final class ArticleUpdateDTO{
