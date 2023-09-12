@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @DynamicInsert
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @SequenceGenerator(
         name = "BANKING_ENTITY_SEQUENCE_GENERATOR",
         sequenceName = "BANKING_ENTITY_SEQ",
@@ -50,12 +51,17 @@ public class Banking {
     @Column(nullable = false)
     private String category;
 
+    @Column(nullable = false)
+    private String content;
+
     @Builder
-    public Banking(int amount, String type, LocalDateTime bankingDate, String category) {
+    public Banking(User owner, int amount, String type, LocalDateTime bankingDate, String category, String content) {
+        this.owner = owner;
         this.amount = amount;
         this.type = type;
         this.bankingDate = bankingDate;
         this.category = category;
+        this.content = content;
     }
 
     public void updateAmount(int amount){ this.amount = amount; }
