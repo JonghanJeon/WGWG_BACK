@@ -11,9 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -74,6 +78,21 @@ public class BankingService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+    public List<ReadCategoryResponseDTO> readCategoryProportion(ReadCategoryRequestDTO dto) {
+        User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
+        );
+        List<Object[]> list = bankingRepository.readCategoryProportion(dto.getUserSeq(), dto.getCheckMonth()+"-01");
+
+        List<ReadCategoryResponseDTO> result = new ArrayList<>();
+        for(Object[] li : list){
+            ReadCategoryResponseDTO responseDTO = new ReadCategoryResponseDTO();
+            responseDTO.setCategory((String) li[0]);
+            responseDTO.setTotal(((BigDecimal) li[1]).intValue());
+            result.add(responseDTO);
+        }
+        return result;
     }
 
     public Long insertBankingHistory(BankingInsertRequestDTO dto){

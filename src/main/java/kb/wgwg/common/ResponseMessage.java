@@ -28,6 +28,9 @@ public class ResponseMessage {
 
 
     //가계부
+    public static final String READ_CATEGORY_SUCCESS = "카테고리 조회 성공";
+    public static final String READ_TOTAL_SUCCESS = "소비 전체 금액 조회 성공";
+    
     public static final String BANKING_INSERT_SUCCESS = "입출금 등록 성공";
     public static final String BANKING_INSERT_FAIL = "입출금 등록 실패";
 
