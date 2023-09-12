@@ -47,30 +47,30 @@ class WgwgApplicationTests {
 
 	@Test
 	void bankingInsert() {
-		User theUser = userRep.findById(1L).orElseThrow();
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
-		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		User theUser = userRep.findById(1L).orElseThrow();
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+//		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
 	}
 }

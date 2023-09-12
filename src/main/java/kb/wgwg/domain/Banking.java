@@ -54,9 +54,6 @@ public class Banking {
     @Column(nullable = false)
     private String category;
 
-    @Column(nullable = false)
-    private String content;
-
     @Builder
     public Banking(User owner, int amount, String type, LocalDateTime bankingDate, String category, String content) {
         this.owner = owner;

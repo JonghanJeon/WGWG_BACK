@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 public class BankingDTO {
     @Getter
     @Setter
@@ -35,7 +33,7 @@ public class BankingDTO {
         private int amount;
         private String content;
     }
-}
+
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
