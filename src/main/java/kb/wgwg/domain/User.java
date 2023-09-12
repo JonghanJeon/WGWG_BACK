@@ -72,8 +72,4 @@ public class User {
         this.userName = this.userName;
     }
 
-    public void enterChallenge(ChallengeUser theParticipant) {
-        theParticipant.setParticipant(this);
-        this.participants.add(theParticipant);
-    }
 }
