@@ -31,8 +31,7 @@ public class UserService {
         UserLoginResponseDTO result = modelMapper.map(theUser, UserLoginResponseDTO.class);
         return result;
     }
-
-
+    
     @Transactional(readOnly = true)
     public UserReadResponseDTO readById(UserReadRequestDTO dto) {
         Optional<User> theUser = userRepository.findById(dto.getUserSeq());
@@ -43,11 +42,6 @@ public class UserService {
         return result;
     }
 
-    /**
-     * 이메일 중복검사 : 중복일 경우 true
-     * @param email
-     * @return boolean
-     */
     public boolean checkEmailDup(String email){
         User user = userRepository.findByEmail(email);
         if(user != null) // email이 사용중일 경우
@@ -55,11 +49,6 @@ public class UserService {
         return false;
     }
 
-    /**
-     * 닉네임 중복검사 : 중복일 경우 true
-     * @param nickName
-     * @return boolean
-     */
     public boolean checkNickNameDup(String nickName){
         User user = userRepository.findByNickName(nickName);
         if(user != null) // nickName 이 사용중일 경우
@@ -67,11 +56,6 @@ public class UserService {
         return false;
     }
 
-    /**
-     * User테이블에 등록 : 성공시 true
-     * @param dto
-     * @return boolean
-     */
     public UserReadResponseDTO insertUser(UserInsertRequestDTO dto) {
         User user = modelMapper.map(dto, User.class);
         User savedUser = userRepository.save(user);
