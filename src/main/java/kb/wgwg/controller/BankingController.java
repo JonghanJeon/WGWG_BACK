@@ -38,5 +38,24 @@ public class BankingController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @DeleteMapping(value = "/delete/{bankingId}")
+    public ResponseEntity<BaseResponseDTO> deleteBankingHistory(@PathVariable(value = "bankingId") Long bankingId) {
+        BaseResponseDTO<Void> response = new BaseResponseDTO<>();
 
+        try {
+            bankingService.deleteBankingHistory(bankingId);
+            response.setMessage("입출금 내역이 성공적으로 삭제되었습니다.");
+            response.setSuccess(true);
+            response.setStatus(200);
+
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            response.setMessage(e.getMessage());
+            response.setSuccess(false);
+            response.setStatus(500);
+
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
 }

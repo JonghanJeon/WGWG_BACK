@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import kb.wgwg.dto.BankingDTO.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
@@ -37,4 +39,11 @@ public class BankingService {
         return result;
     }
 
+    public void deleteBankingHistory(Long bankingId) {
+        try {
+            bankingRepository.deleteById(bankingId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
