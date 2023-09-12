@@ -50,5 +50,4 @@ public class Banking {
     @Column(nullable = false)
     private String category;
 
-
 }
