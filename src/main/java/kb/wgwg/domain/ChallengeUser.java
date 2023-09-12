@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SequenceGenerator(
         name = "CHALLENGE_USER_ENTITY_SEQUENCE_GENERATOR",
         sequenceName = "CHALLENGE_USER_ENTITY_SEQ",
@@ -30,6 +31,9 @@ public class ChallengeUser {
     @JoinColumn(name = "user_id")
     private User participant;
 
+    @Column(nullable = false)
+    private String account;
+
     @Column(name = "is_success")
     private boolean isSuccess = false;
 
@@ -39,6 +43,7 @@ public class ChallengeUser {
     }
 
     @Builder
-    public ChallengeUser() {
+    public ChallengeUser(String account) {
+        this.account = account;
     }
 }
