@@ -18,7 +18,7 @@ public class BankingController {
     private final BankingService bankingService;
 
     @PostMapping(value = "/update")
-    public ResponseEntity<BaseResponseDTO> update(@RequestBody BankingUpdateDTO dto){
+    public ResponseEntity<BaseResponseDTO> updateBankingHistory(@RequestBody BankingUpdateDTO dto){
         BaseResponseDTO<BankingUpdateDTO> response = new BaseResponseDTO<>();
         try {
             BankingUpdateDTO result = bankingService.updateBanking(dto);
