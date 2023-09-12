@@ -44,24 +44,50 @@ public class UserController {
 
 
     @GetMapping("/{email}/check/email")
-    public ResponseEntity<?> checkEmailDup(@PathVariable String email){
-        if(userService.checkEmailDup(email))
-            return ResponseEntity.status(400).body("{\"status\": 400, \"success\": false, \"message\": \"이메일 중복\"}");
-        return ResponseEntity.ok().body("{\"status\": 200, \"success\": true, \"message\": \"이메일 사용 가능\"}");
+    public ResponseEntity<BaseResponseDTO> checkEmailDup(@PathVariable String email){
+        BaseResponseDTO result = new BaseResponseDTO<>();
+        if(userService.checkEmailDup(email)){
+            result.setStatus(404);
+            result.setSuccess(false);
+            result.setMessage("이메일 중복.");
+        }else{
+            result.setStatus(200);
+            result.setSuccess(true);
+            result.setMessage("이메일 사용 가능.");
+        }
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{nickName}/check/nickname")
-    public ResponseEntity<?> checkNickNameDup(@PathVariable String nickName){
-        if(userService.checkNickNameDup(nickName))
-            return ResponseEntity.status(400).body("{\"status\": 400, \"success\": false, \"message\": \"닉네임 중복\"}");
-        return ResponseEntity.ok().body("{\"status\": 200, \"success\": true, \"message\": \"닉네임 사용 가능\"}");
+    public ResponseEntity<BaseResponseDTO> checkNickNameDup(@PathVariable String nickName){
+        BaseResponseDTO result = new BaseResponseDTO<>();
+        if(userService.checkNickNameDup(nickName)){
+            result.setStatus(404);
+            result.setSuccess(false);
+            result.setMessage("닉네임 중복.");
+        }else{
+            result.setStatus(200);
+            result.setSuccess(true);
+            result.setMessage("닉네임 사용 가능.");
+        }
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<?> insert(@RequestBody UserInsertRequestDTO dto){
-        if(userService.insertUser(dto))
-            return ResponseEntity.ok().body("{\"status\": 200, \"success\": true, \"message\": \"회원가입 성공\"}");
-        return ResponseEntity.status(400).body("{\"status\": 400, \"success\": false, \"message\": \"회원가입 실패\"}");
+    public ResponseEntity<BaseResponseDTO> insert(@RequestBody UserInsertRequestDTO dto){
+        BaseResponseDTO<UserReadResponseDTO> result = new BaseResponseDTO<>();
+        try{
+            UserReadResponseDTO insertResult = userService.insertUser(dto);
+            result.setMessage("유저 등록 완료.");
+            result.setStatus(200);
+            result.setSuccess(true);
+            result.setData(insertResult);
+        } catch (Exception e){
+            result.setMessage(e.getMessage());
+            result.setSuccess(false);
+            result.setStatus(500);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping(value = "/delete/{id}")

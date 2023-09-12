@@ -54,12 +54,16 @@ public class Banking {
     @Column(nullable = false)
     private String category;
 
+    @Column(nullable = false)
+    private String content;
+
     @Builder
-    public Banking(int amount, String type, String category, User owner, String content) {
+    public Banking(User owner, int amount, String type, LocalDateTime bankingDate, String category, String content) {
+        this.owner = owner;
         this.amount = amount;
         this.type = type;
+        this.bankingDate = bankingDate;
         this.category = category;
-        this.owner = owner;
         this.content = content;
     }
 
@@ -67,4 +71,5 @@ public class Banking {
     public void updateType(String type){ this.type = type; }
     public void updateBankingDate(LocalDateTime bankingDate){ this.bankingDate = bankingDate; }
     public void updateCategory(String category){ this.category = category; }
+
 }

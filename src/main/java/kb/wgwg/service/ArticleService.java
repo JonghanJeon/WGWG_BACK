@@ -79,7 +79,7 @@ public class ArticleService {
                         .title(article.getTitle())
                         .insertDate(article.getInsertDate())
                         .updateDate(article.getUpdateDate())
-                        .writer("article.getWriter().getNickName()")
+                        .writer(article.getWriter().getNickName())
                         .commentSize(article.getComments().size())
                         .build();
                 return dto;

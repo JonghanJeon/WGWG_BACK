@@ -45,6 +45,9 @@ public class User {
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "participant")
+    private List<ChallengeUser> participants = new ArrayList<>();
+
     @Builder
     public User(String userName, String email, String nickName, String password) {
         this.userName = userName;
@@ -67,5 +70,10 @@ public class User {
 
     public void updateUserName(String userName) {
         this.userName = this.userName;
+    }
+
+    public void enterChallenge(ChallengeUser theParticipant) {
+        theParticipant.setParticipant(this);
+        this.participants.add(theParticipant);
     }
 }
