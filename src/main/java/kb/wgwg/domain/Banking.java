@@ -41,6 +41,10 @@ public class Banking {
     @Column(nullable = false)
     private String type;
 
+    @Column(nullable = false)
+    private String content;
+
+    @CreationTimestamp
     @Column(name = "BANKING_DATE")
     private LocalDateTime bankingDate;
 
@@ -50,5 +54,17 @@ public class Banking {
     @Column(nullable = false)
     private String category;
 
+    @Builder
+    public Banking(int amount, String type, String category, User owner, String content) {
+        this.amount = amount;
+        this.type = type;
+        this.category = category;
+        this.owner = owner;
+        this.content = content;
+    }
 
+    public void updateAmount(int amount){ this.amount = amount; }
+    public void updateType(String type){ this.type = type; }
+    public void updateBankingDate(LocalDateTime bankingDate){ this.bankingDate = bankingDate; }
+    public void updateCategory(String category){ this.category = category; }
 }

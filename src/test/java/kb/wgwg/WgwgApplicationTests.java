@@ -1,8 +1,10 @@
 package kb.wgwg;
 
 import kb.wgwg.domain.Article;
+import kb.wgwg.domain.Banking;
 import kb.wgwg.domain.User;
 import kb.wgwg.repository.ArticleRepository;
+import kb.wgwg.repository.BankingRepository;
 import kb.wgwg.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ class WgwgApplicationTests {
 
 	@Autowired
 	private ArticleRepository articleRep;
+
+	@Autowired
+	private BankingRepository bankingRep;
 
 	@Test
 	void contextLoads() {
@@ -38,5 +43,34 @@ class WgwgApplicationTests {
 
 		Article theArticle = articleRep.save(new Article("제목1", "내용1", "카테고리1", theUser));
 		System.out.println(theArticle);
+	}
+
+	@Test
+	void bankingInsert() {
+		User theUser = userRep.findById(1L).orElseThrow();
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
 	}
 }
