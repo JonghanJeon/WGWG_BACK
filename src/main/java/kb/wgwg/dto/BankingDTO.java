@@ -63,6 +63,20 @@ public class BankingDTO {
         }
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static final class ReadTotalSpendDTO {
+        private Long userSeq;
+        private String checkMonth;
+
+        @Builder
+        public ReadTotalSpendDTO(Long userSeq, String checkMonth) {
+            this.userSeq = userSeq;
+            this.checkMonth = checkMonth;
+        }
+    }
+
 
     @Getter
     @Setter

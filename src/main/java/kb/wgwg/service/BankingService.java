@@ -95,6 +95,15 @@ public class BankingService {
         return result;
     }
 
+    public int sumTotalSpend(ReadTotalSpendDTO dto) {
+        User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
+        );
+
+        int totalSpend = bankingRepository.sumTotalSpend(dto.getUserSeq(), dto.getCheckMonth()+"-01");
+        return totalSpend;
+    }
+
     public Long insertBankingHistory(BankingInsertRequestDTO dto){
         User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
                 () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")

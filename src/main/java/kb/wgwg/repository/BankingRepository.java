@@ -22,4 +22,10 @@ public interface BankingRepository extends JpaRepository<Banking, Long> {
     List<Object[]> readCategoryProportion(
             @Param("userSeq") Long userSeq,
             @Param("checkMonth") String checkMonth);
+
+    @Query(value = "SELECT SUM(amount) AS TOTAL " +
+            "FROM banking " +
+            "WHERE USER_SEQ = :userSeq AND BANKING_DATE BETWEEN TO_DATE(:checkMonth, 'YYYY-MM-DD') AND LAST_DAY(TO_DATE(:checkMonth, 'YYYY-MM-DD'))", nativeQuery = true)
+    int sumTotalSpend(@Param("userSeq") Long userSeq,
+                      @Param("checkMonth") String checkMonth);
 }
