@@ -1,9 +1,9 @@
 package kb.wgwg.controller;
 
-import kb.wgwg.dto.BankingDTO.*;
-import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.common.ResponseMessage;
 import kb.wgwg.common.StatusCode;
+import kb.wgwg.dto.BankingDTO.*;
+import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.service.BankingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,9 @@ import javax.persistence.EntityNotFoundException;
 import static kb.wgwg.common.ResponseMessage.INTERNAL_SERVER_ERROR;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+
+
 
 @RestController
 @RequiredArgsConstructor
@@ -117,4 +120,28 @@ public class BankingController {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+    @PostMapping(value = "/read/category")
+    public ResponseEntity<BaseResponseDTO> readCategoryProportion(@RequestBody ReadCategoryRequestDTO requestDTO) {
+        BaseResponseDTO<List<ReadCategoryResponseDTO>> result = new BaseResponseDTO<>();
+        try {
+            List<ReadCategoryResponseDTO> result_li = bankingService.readCategoryProportion(requestDTO);
+            result.setMessage(ResponseMessage.READ_CATEGORY_SUCCESS);
+            result.setStatus(StatusCode.OK);
+            result.setSuccess(true);
+            result.setData(result_li);
+            return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException e) {
+            result.setMessage(e.getMessage());
+            result.setStatus(StatusCode.NOT_FOUND);
+            result.setSuccess(false);
+            return ResponseEntity.badRequest().body(result);
+        } catch (RuntimeException e) {
+            result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            result.setSuccess(false);
+            return ResponseEntity.internalServerError().body(result);
+        }
+    }
+
+
 }

@@ -34,6 +34,36 @@ public class BankingDTO {
         private String content;
     }
 
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static final class ReadCategoryRequestDTO {
+        private Long userSeq;
+        private String checkMonth;
+
+        @Builder
+        public ReadCategoryRequestDTO(Long userSeq, String checkMonth){
+            this.userSeq = userSeq;
+            this.checkMonth = checkMonth;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static final class ReadCategoryResponseDTO {
+        private String category;
+        private int total;
+
+        @Builder
+        public ReadCategoryResponseDTO(String category, int total){
+            this.category = category;
+            this.total = total;
+        }
+    }
+
+
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
