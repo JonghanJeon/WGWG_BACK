@@ -50,5 +50,18 @@ public class Banking {
     @Column(nullable = false)
     private String category;
 
+    @Builder
+    public Banking(int amount, String type, LocalDateTime bankingDate, String category) {
+        this.amount = amount;
+        this.type = type;
+        this.bankingDate = bankingDate;
+        this.category = category;
+    }
+
+    public void updateAmount(int amount){ this.amount = amount; }
+    public void updateType(String type){ this.type = type; }
+    public void updateBankingDate(LocalDateTime bankingDate){ this.bankingDate = bankingDate; }
+    public void updateCategory(String category){ this.category = category; }
+
 
 }
