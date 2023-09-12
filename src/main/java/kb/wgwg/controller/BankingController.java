@@ -1,5 +1,7 @@
 package kb.wgwg.controller;
 
+import kb.wgwg.common.ResponseMessage;
+import kb.wgwg.common.StatusCode;
 import kb.wgwg.dto.BankingDTO.*;
 import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.service.BankingService;
@@ -8,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static kb.wgwg.common.ResponseMessage.INTERNAL_SERVER_ERROR;
 
@@ -54,6 +59,37 @@ public class BankingController {
             response.setMessage(e.getMessage());
             response.setSuccess(false);
             response.setStatus(500);
+
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    @PostMapping("/insert")
+    public ResponseEntity bankingInsert(@RequestBody BankingInsertRequestDTO dto){
+        BaseResponseDTO response = new BaseResponseDTO<>();
+
+        try {
+            Long savedId = bankingService.insertBankingHistory(dto);
+            Map<String, Long> map = new HashMap<>();
+            map.put("bankingSeq", savedId);
+
+            response.setStatus(StatusCode.OK);
+            response.setMessage(ResponseMessage.BANKING_INSERT_SUCCESS);
+            response.setSuccess(true);
+            response.setData(map);
+
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e){
+            response.setStatus(StatusCode.NOT_FOUND);
+            response.setMessage(ResponseMessage.NOT_FOUND_USER);
+            response.setSuccess(false);
+
+            return ResponseEntity.badRequest().body(response);
+        } catch (RuntimeException e){
+            e.printStackTrace();
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setMessage(e.getMessage());
+            response.setSuccess(false);
 
             return ResponseEntity.internalServerError().body(response);
         }
