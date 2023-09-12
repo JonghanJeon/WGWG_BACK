@@ -1,6 +1,7 @@
 package kb.wgwg.service;
 
 import kb.wgwg.domain.User;
+import kb.wgwg.dto.ArticleDTO;
 import kb.wgwg.dto.UserDTO.*;
 import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
@@ -18,6 +20,7 @@ public class UserService {
 
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final EntityManager entityManager;
 
     public UserLoginResponseDTO login(UserLoginRequestDTO dto) {
 
@@ -69,16 +72,12 @@ public class UserService {
      * @param dto
      * @return boolean
      */
-    public boolean insertUser(UserInsertRequestDTO dto) {
+    public UserReadResponseDTO insertUser(UserInsertRequestDTO dto) {
         User user = modelMapper.map(dto, User.class);
-        try {
-            userRepository.save(user);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("userService " + e.getMessage());
-        }
-        return false;
+        User savedUser = userRepository.save(user);
+        entityManager.flush(); //insertDate
+        UserReadResponseDTO result = modelMapper.map(savedUser, UserReadResponseDTO.class);
+        return modelMapper.map(result, UserReadResponseDTO.class);
     }
 
     public void deleteUser(Long id) {
