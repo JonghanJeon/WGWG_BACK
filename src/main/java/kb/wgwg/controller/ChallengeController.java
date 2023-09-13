@@ -138,4 +138,26 @@ public class ChallengeController {
         result.setSuccess(true);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping(value = "/read/{id}")
+    public ResponseEntity<BaseResponseDTO> readNChallenge(@PathVariable Long id) {
+        BaseResponseDTO<NChallengeReadResponseDTO> response = new BaseResponseDTO<>();
+
+        try {
+            NChallengeReadResponseDTO result = nChallengeService.findNChallengeById(id);
+            response.setMessage("성공적으로 챌린지를 불러왔습니다.");
+            response.setStatus(200);
+            response.setSuccess(true);
+            response.setData(result);
+        } catch (EntityNotFoundException e) {
+            response.setMessage(e.getMessage());
+            response.setStatus(404);
+            response.setSuccess(false);
+        } catch (Exception e) {
+            response.setMessage(INTERNAL_SERVER_ERROR);
+            response.setStatus(500);
+            response.setSuccess(false);
+        }
+        return ResponseEntity.ok(response);
+    }
 }

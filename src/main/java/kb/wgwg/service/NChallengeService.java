@@ -14,7 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -126,5 +130,30 @@ public class NChallengeService {
             }
         });
         return dtoPage;
+    }
+
+    @Transactional(readOnly = true)
+    public NChallengeReadResponseDTO findNChallengeById(Long id) {
+        NChallenge nchallenge = (NChallenge) challengeRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("해당 챌린지를 찾을 수 없습니다.")
+        );
+
+        Map<String, Boolean> isSuccessList = new HashMap<>();
+        for (ChallengeUser participant : nchallenge.getParticipants()) {
+            isSuccessList.put(
+                    participant.getParticipant().getNickName(),
+                    participant.isSuccess()
+                    );
+        }
+        System.out.println("isSuccessList = " + isSuccessList);
+        return NChallengeReadResponseDTO.builder()
+                .title(nchallenge.getTitle())
+                .description(nchallenge.getDescription())
+                .startDate(nchallenge.getStartDate())
+                .endDate(nchallenge.getEndDate())
+                .deposit(nchallenge.getDeposit())
+                .limitAmount(nchallenge.getLimitAmount())
+                .isSuccessList(isSuccessList)
+                .build();
     }
 }

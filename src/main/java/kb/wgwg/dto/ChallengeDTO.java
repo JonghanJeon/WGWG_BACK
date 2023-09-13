@@ -3,6 +3,8 @@ package kb.wgwg.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 public class ChallengeDTO {
 
@@ -186,5 +188,20 @@ public class ChallengeDTO {
             this.startDate = startDate;
             this.endDate = endDate;
         }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class NChallengeReadResponseDTO {
+        private String title;
+        private String description;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private int deposit;
+        private int limitAmount;
+        private Map<String, Boolean> isSuccessList;
     }
 }
