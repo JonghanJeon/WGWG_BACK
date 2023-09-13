@@ -44,8 +44,8 @@ public class BankingService {
         return result;
     }
 
-    public Page<BankingListResponseDTO> findBankingByYearAndMonth(int year, int month, Pageable pageable) {
-        Page<Banking> page = bankingRepository.findMonth(year, month, pageable);
+    public Page<BankingListResponseDTO> findBankingByYearAndMonth(int year, int month, Long userSeq,Pageable pageable) {
+        Page<Banking> page = bankingRepository.findMonth(year, month, userSeq, pageable);
         System.out.println(page);
 
         Page<BankingListResponseDTO> dtoPage = page.map(new Function<Banking, BankingListResponseDTO>() {
