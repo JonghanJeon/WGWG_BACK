@@ -83,6 +83,30 @@ public class ChallengeController {
         }
     }
 
+    @PostMapping(value = "/update")
+    public ResponseEntity<BaseResponseDTO> updateNChallenge(@RequestBody NChallengeUpdateDTO dto) {
+        BaseResponseDTO response = new BaseResponseDTO();
+
+        try {
+            int updateRows = nChallengeService.updateNChallenge(dto);
+            response.setStatus(StatusCode.OK);
+            response.setMessage(ResponseMessage.N_CHALLENGE_UPDATE_SUCCESS);
+            response.setSuccess(true);
+            response.setData(updateRows);
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e){
+            response.setStatus(StatusCode.BAD_REQUEST);
+            response.setMessage(ResponseMessage.NOT_FOUND_N_CHALLENGE);
+            response.setSuccess(false);
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e){
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            response.setSuccess(false);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
     @PostMapping(value = "/read")
     public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody NChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
         BaseResponseDTO<Page<NChallengeListResponseDTO>> response = new BaseResponseDTO<>();
