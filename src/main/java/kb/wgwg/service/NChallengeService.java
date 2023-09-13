@@ -88,6 +88,14 @@ public class NChallengeService {
         entityManager.persist(theParticipant);
     }
 
+    public int updateNChallenge(NChallengeUpdateDTO dto) {
+        Challenge challenge = challengeRepository.findById(dto.getChallengeId()).orElseThrow(
+                () -> new EntityNotFoundException("해당 챌린지를 찾을 수 없습니다.")
+        );
+
+        return challengeRepository.updateChallengeByChallengeId(dto.getChallengeId(), dto.getTitle(), dto.getDescription(), dto.getStartDate(), dto.getLimitAmount());
+    }
+
     public void deleteNChallenge(Long id) {
         challengeRepository.deleteByChallengeId(id);
     }

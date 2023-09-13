@@ -1,7 +1,6 @@
 package kb.wgwg.dto;
 
 import lombok.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -140,6 +139,19 @@ public class ChallengeDTO {
         private String account;
 
         private String challengeType;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class NChallengeUpdateDTO{
+        private Long challengeId;
+        private String title;
+        private String description;
+        private LocalDateTime startDate;
+        private int limitAmount;
     }
 
     @Getter
