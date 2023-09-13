@@ -86,7 +86,6 @@ public class ChallengeController {
     @PostMapping(value = "/update")
     public ResponseEntity<BaseResponseDTO> updateNChallenge(@RequestBody NChallengeUpdateDTO dto) {
         BaseResponseDTO response = new BaseResponseDTO();
-
         try {
             int updateRows = nChallengeService.updateNChallenge(dto);
             response.setStatus(StatusCode.OK);
