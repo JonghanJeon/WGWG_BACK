@@ -22,4 +22,11 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     @Modifying
     void deleteByChallengeId(Long challengeId);
 
+    @Modifying
+    @Query(value = "UPDATE Challenge c SET status = '종료' WHERE TRUNC(END_DATE) < TRUNC(sysdate)", nativeQuery = true)
+    void updateChallengeStateToFinish();
+
+    @Modifying
+    @Query(value = "UPDATE Challenge c SET status = '진행' WHERE TRUNC(START_DATE) = TRUNC(sysdate)", nativeQuery = true)
+    void updateChallengeStateToOngoing();
 }
