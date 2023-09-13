@@ -25,6 +25,7 @@ public class ResponseMessage {
 
 
     //챌린지
+    public static final String READ_CHALLENGELIST_SUCCESS = "챌린지 조회 성공";
 
 
     //가계부

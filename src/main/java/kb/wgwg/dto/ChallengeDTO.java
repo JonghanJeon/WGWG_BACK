@@ -92,4 +92,38 @@ public class ChallengeDTO {
 
         private String account;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class NChallengeListRequestDTO {
+        private String status;
+
+        @Builder
+        public NChallengeListRequestDTO(String status){
+            this.status = status;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class NChallengeListResponseDTO {
+        private Long challengeId;
+        private String title;
+        private String status;
+        private int deposit;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+
+        @Builder
+        public NChallengeListResponseDTO(Long challengeId, String title, String status, int deposit, LocalDateTime startDate, LocalDateTime endDate) {
+            this.challengeId = challengeId;
+            this.title = title;
+            this.status = status;
+            this.deposit = deposit;
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
+    }
 }
