@@ -70,12 +70,9 @@ public class ArticleDTO {
 
         private String writer;
 
-        private List<Comment> comments;
-
         @Builder
         public ArticleReadResponseDTO(String title, String content, String category,
-                                      LocalDateTime insertDate, LocalDateTime updateDate,
-                                      User writer, List<Comment> comments)
+                                      LocalDateTime insertDate, LocalDateTime updateDate, User writer)
         {
             this.title = title;
             this.content = content;
@@ -83,7 +80,6 @@ public class ArticleDTO {
             this.insertDate = insertDate;
             this.updateDate = updateDate;
             this.writer = writer.getNickName();
-            this.comments = comments;
         }
     }
 
