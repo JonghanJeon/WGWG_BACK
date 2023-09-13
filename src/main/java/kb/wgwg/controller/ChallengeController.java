@@ -1,10 +1,14 @@
 package kb.wgwg.controller;
 
-import kb.wgwg.dto.ArticleDTO;
+import kb.wgwg.common.ResponseMessage;
+import kb.wgwg.common.StatusCode;
 import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.dto.ChallengeDTO.*;
 import kb.wgwg.service.NChallengeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +43,7 @@ public class ChallengeController {
 
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
+            e.printStackTrace();
             response.setMessage(INTERNAL_SERVER_ERROR);
             response.setStatus(500);
             response.setSuccess(false);
@@ -74,6 +79,29 @@ public class ChallengeController {
             response.setStatus(500);
             response.setSuccess(false);
 
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    @PostMapping(value = "/read")
+    public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody NChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
+        BaseResponseDTO<Page<NChallengeListResponseDTO>> response = new BaseResponseDTO<>();
+        try {
+            Page<NChallengeListResponseDTO> result = nChallengeService.findNChallengeByStatus(requestDTO, pageable);
+            response.setMessage(ResponseMessage.READ_CHALLENGELIST_SUCCESS);
+            response.setStatus(StatusCode.OK);
+            response.setSuccess(true);
+            response.setData(result);
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e) {
+            response.setMessage(e.getMessage());
+            response.setStatus(StatusCode.NOT_FOUND);
+            response.setSuccess(false);
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setSuccess(false);
             return ResponseEntity.internalServerError().body(response);
         }
     }
