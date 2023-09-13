@@ -7,10 +7,7 @@ import kb.wgwg.service.NChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -79,5 +76,15 @@ public class ChallengeController {
 
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity deleteNChallenge(@PathVariable Long id) {
+        BaseResponseDTO result = new BaseResponseDTO<>();
+        nChallengeService.deleteNChallenge(id);
+        result.setMessage("check");
+        result.setStatus(200);
+        result.setSuccess(true);
+        return ResponseEntity.ok(result);
     }
 }

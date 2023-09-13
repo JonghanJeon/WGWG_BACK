@@ -71,4 +71,8 @@ public class NChallengeService {
         theParticipant.setParticipant(theUser);
         entityManager.persist(theParticipant);
     }
+
+    public void deleteNChallenge(Long id) {
+        challengeRepository.deleteByChallengeId(id);
+    }
 }
