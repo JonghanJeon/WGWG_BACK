@@ -24,11 +24,16 @@ public class CoffeeChallenge extends Challenge {
 
     private int totalAsset;
 
+    private int savingAmount;
+
     @Builder
     public CoffeeChallenge(String title, String description, String status,
-                           LocalDateTime startDate, LocalDateTime endDate, int totalAsset)
+                           LocalDateTime startDate, LocalDateTime endDate,
+                           int savingAmount, int totalAsset)
     {
         super(title, description, status, startDate, endDate);
+
+        this.savingAmount = savingAmount;
         this.totalAsset = totalAsset;
     }
 }

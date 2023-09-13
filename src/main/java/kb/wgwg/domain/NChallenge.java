@@ -26,13 +26,17 @@ public class NChallenge extends Challenge {
 
     private int deposit;
 
+    private int limitAmount;
+
     private int totalDeposit;
 
     @Builder
     public NChallenge(String title, String description, String status,
-                           LocalDateTime startDate, LocalDateTime endDate, int deposit)
+                           LocalDateTime startDate, LocalDateTime endDate, int limitAmount, int deposit)
     {
         super(title, description, status, startDate, endDate);
+
+        this.limitAmount = limitAmount;
         this.deposit = deposit;
     }
 }

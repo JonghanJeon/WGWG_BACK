@@ -25,11 +25,14 @@ public class ChallengeDTO {
 
         private int deposit;
 
+        private int limitAmount;
+
         private String account;
 
         @Builder
         public NChallengeInsertRequestDTO(String title, String description, String status,
-                                          LocalDateTime startDate, LocalDateTime endDate, int deposit, String account)
+                                          LocalDateTime startDate, LocalDateTime endDate, int deposit,
+                                          int limitAmount, String account)
         {
             this.title = title;
             this.description = description;
@@ -37,6 +40,7 @@ public class ChallengeDTO {
             this.startDate = startDate;
             this.endDate = endDate;
             this.deposit = deposit;
+            this.limitAmount = limitAmount;
             this.account = account;
         }
     }
@@ -60,9 +64,11 @@ public class ChallengeDTO {
 
         private int deposit;
 
+        private int limitAmount;
+
         @Builder
         public NChallengeInsertResponseDTO(Long challengeId, String title, String description, String status,
-                                           LocalDateTime startDate, LocalDateTime endDate, int deposit)
+                                           LocalDateTime startDate, LocalDateTime endDate, int deposit, int limitAmount)
         {
             this.challengeId = challengeId;
             this.title = title;
@@ -71,6 +77,7 @@ public class ChallengeDTO {
             this.startDate = startDate;
             this.endDate = endDate;
             this.deposit = deposit;
+            this.limitAmount = limitAmount;
         }
     }
 

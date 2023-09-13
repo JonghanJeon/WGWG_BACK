@@ -48,11 +48,11 @@ public class NChallengeService {
 
     public void participateNChallenge(NChallengeParticipateRequestDTO dto) {
         User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
-                () -> new EntityNotFoundException()
+                EntityNotFoundException::new
         );
 
         Challenge theChallenge = challengeRepository.findById(dto.getChallengeId()).orElseThrow(
-                () -> new EntityNotFoundException()
+                EntityNotFoundException::new
         );
 
         theChallenge.getParticipants().stream().forEach(
