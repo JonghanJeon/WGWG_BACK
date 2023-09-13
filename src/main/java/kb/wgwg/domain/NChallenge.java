@@ -32,9 +32,9 @@ public class NChallenge extends Challenge {
 
     @Builder
     public NChallenge(String title, String description, String status,
-                           LocalDateTime startDate, LocalDateTime endDate, int limitAmount, int deposit)
+                           LocalDateTime startDate, LocalDateTime endDate, int limitAmount, int deposit, String challengeType)
     {
-        super(title, description, status, startDate, endDate);
+        super(title, description, status, startDate, endDate, challengeType);
 
         this.limitAmount = limitAmount;
         this.deposit = deposit;

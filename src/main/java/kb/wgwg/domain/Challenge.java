@@ -44,14 +44,18 @@ public abstract class Challenge {
     @Column(nullable = false)
     private LocalDateTime endDate;
 
+    @Column(nullable = false)
+    private String challengeType;
+
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE)
     private List<ChallengeUser> participants = new ArrayList<>();
 
-    public Challenge(String title, String description, String status, LocalDateTime startDate, LocalDateTime endDate) {
+    public Challenge(String title, String description, String status, LocalDateTime startDate, LocalDateTime endDate, String challengeType) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.challengeType = challengeType;
     }
 }

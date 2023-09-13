@@ -28,10 +28,12 @@ public class ChallengeDTO {
 
         private String account;
 
+        private String challengeType;
+
         @Builder
         public NChallengeInsertRequestDTO(String title, String description, String status,
                                           LocalDateTime startDate, int deposit,
-                                          int limitAmount, String account)
+                                          int limitAmount, String account, String challengeType)
         {
             this.title = title;
             this.description = description;
@@ -40,6 +42,7 @@ public class ChallengeDTO {
             this.deposit = deposit;
             this.limitAmount = limitAmount;
             this.account = account;
+            this.challengeType = challengeType;
         }
     }
 
@@ -66,10 +69,12 @@ public class ChallengeDTO {
 
         private String account;
 
+        private String challengeType;
+
         @Builder
         public NChallengeInsertEndDateRequestDTO(Long ownerId, String title, String description, String status,
                                           LocalDateTime startDate, LocalDateTime endDate, int deposit,
-                                          int limitAmount, String account)
+                                          int limitAmount, String account, String challengeType)
         {
             this.ownerId = ownerId;
             this.title = title;
@@ -80,6 +85,7 @@ public class ChallengeDTO {
             this.deposit = deposit;
             this.limitAmount = limitAmount;
             this.account = account;
+            this.challengeType = challengeType;
         }
     }
 
@@ -104,9 +110,11 @@ public class ChallengeDTO {
 
         private int limitAmount;
 
+        private String challengeType;
+
         @Builder
         public NChallengeInsertResponseDTO(Long challengeId, String title, String description, String status,
-                                           LocalDateTime startDate, LocalDateTime endDate, int deposit, int limitAmount)
+                                           LocalDateTime startDate, LocalDateTime endDate, int deposit, int limitAmount, String challengeType)
         {
             this.challengeId = challengeId;
             this.title = title;
@@ -116,6 +124,7 @@ public class ChallengeDTO {
             this.endDate = endDate;
             this.deposit = deposit;
             this.limitAmount = limitAmount;
+            this.challengeType = challengeType;
         }
     }
 
@@ -129,6 +138,8 @@ public class ChallengeDTO {
         private Long userSeq;
 
         private String account;
+
+        private String challengeType;
     }
 
     @Getter

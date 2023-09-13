@@ -29,9 +29,9 @@ public class CoffeeChallenge extends Challenge {
     @Builder
     public CoffeeChallenge(String title, String description, String status,
                            LocalDateTime startDate, LocalDateTime endDate,
-                           int savingAmount, int totalAsset)
+                           int savingAmount, int totalAsset, String challengeType)
     {
-        super(title, description, status, startDate, endDate);
+        super(title, description, status, startDate, endDate, challengeType);
 
         this.savingAmount = savingAmount;
         this.totalAsset = totalAsset;

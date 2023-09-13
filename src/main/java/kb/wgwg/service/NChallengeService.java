@@ -42,6 +42,7 @@ public class NChallengeService {
                 .deposit(dto.getDeposit())
                 .limitAmount(dto.getLimitAmount())
                 .account(dto.getAccount())
+                .challengeType(dto.getChallengeType())
                 .build();
 
         NChallenge theChallenge = challengeRepository.save(modelMapper.map(finalDto, NChallenge.class));
@@ -49,6 +50,7 @@ public class NChallengeService {
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(true)
                                                     .account(dto.getAccount())
+                                                    .challengeType(dto.getChallengeType())
                                                     .build();
 
         theParticipant.addParticipant(theChallenge);
@@ -78,6 +80,7 @@ public class NChallengeService {
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(true)
                                                     .account(dto.getAccount())
+                                                    .challengeType(dto.getChallengeType())
                                                     .build();
 
         theParticipant.addParticipant(theChallenge);

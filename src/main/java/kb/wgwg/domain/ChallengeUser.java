@@ -40,14 +40,18 @@ public class ChallengeUser {
     @Column(name = "is_success")
     private boolean isSuccess;
 
+    @Column(nullable = false)
+    private String challengeType;
+
     public void addParticipant(Challenge theChallenge) {
         this.challenge = theChallenge;
         theChallenge.getParticipants().add(this);
     }
 
     @Builder
-    public ChallengeUser(String account, boolean isSuccess) {
+    public ChallengeUser(String account, boolean isSuccess, String challengeType) {
         this.account = account;
         this.isSuccess = isSuccess;
+        this.challengeType = challengeType;
     }
 }
