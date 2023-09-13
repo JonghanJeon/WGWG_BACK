@@ -1,6 +1,7 @@
 package kb.wgwg.dto;
 
 import lombok.*;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,42 @@ public class ChallengeDTO {
 
         private LocalDateTime startDate;
 
+        private int deposit;
+
+        private int limitAmount;
+
+        private String account;
+
+        @Builder
+        public NChallengeInsertRequestDTO(String title, String description, String status,
+                                          LocalDateTime startDate, int deposit,
+                                          int limitAmount, String account)
+        {
+            this.title = title;
+            this.description = description;
+            this.status = status;
+            this.startDate = startDate;
+            this.deposit = deposit;
+            this.limitAmount = limitAmount;
+            this.account = account;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class NChallengeInsertEndDateRequestDTO {
+
+        private Long ownerId;
+
+        private String title;
+
+        private String description;
+
+        private String status;
+
+        private LocalDateTime startDate;
+
         private LocalDateTime endDate;
 
         private int deposit;
@@ -30,10 +67,11 @@ public class ChallengeDTO {
         private String account;
 
         @Builder
-        public NChallengeInsertRequestDTO(String title, String description, String status,
+        public NChallengeInsertEndDateRequestDTO(Long ownerId, String title, String description, String status,
                                           LocalDateTime startDate, LocalDateTime endDate, int deposit,
                                           int limitAmount, String account)
         {
+            this.ownerId = ownerId;
             this.title = title;
             this.description = description;
             this.status = status;

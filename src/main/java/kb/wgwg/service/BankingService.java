@@ -1,9 +1,10 @@
 package kb.wgwg.service;
 
-import kb.wgwg.domain.Banking;
-import kb.wgwg.domain.User;
+import kb.wgwg.domain.*;
 import kb.wgwg.dto.BankingDTO.*;
 import kb.wgwg.repository.BankingRepository;
+import kb.wgwg.repository.ChallengeRepository;
+import kb.wgwg.repository.ChallengeUserRepository;
 import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,6 +29,7 @@ public class BankingService {
     private final ModelMapper modelMapper;
     private final BankingRepository bankingRepository;
     private final UserRepository userRepository;
+    private final ChallengeRepository challengeRepository;
 
     public BankingUpdateDTO updateBanking(BankingUpdateDTO dto) {
         Banking banking = bankingRepository.findById(dto.getBankingId()).orElseThrow(

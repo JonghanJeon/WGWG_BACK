@@ -32,7 +32,19 @@ public class NChallengeService {
                 () -> new EntityNotFoundException()
         );
 
-        NChallenge theChallenge = challengeRepository.save(modelMapper.map(dto, NChallenge.class));
+        NChallengeInsertEndDateRequestDTO finalDto = NChallengeInsertEndDateRequestDTO.builder()
+                .ownerId(dto.getOwnerId())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .status(dto.getStatus())
+                .startDate(dto.getStartDate())
+                .endDate(dto.getStartDate().plusDays(7))
+                .deposit(dto.getDeposit())
+                .limitAmount(dto.getLimitAmount())
+                .account(dto.getAccount())
+                .build();
+
+        NChallenge theChallenge = challengeRepository.save(modelMapper.map(finalDto, NChallenge.class));
 
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(true)
