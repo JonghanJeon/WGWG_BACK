@@ -35,6 +35,7 @@ class WgwgApplicationTests {
 		userRep.save(new User("장희정", "a@naver.com", "jang", "1234"));
 		userRep.save(new User("이가현", "b@naver.com", "hyun", "1234"));
 		userRep.save(new User("이찬범", "c@naver.com", "chan", "1234"));
+		userRep.save(new User("나경률", "d@naver.com", "na", "1234"));
 	}
 
 	@Test
@@ -72,5 +73,10 @@ class WgwgApplicationTests {
 //		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
 //		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
 //		bankingRep.save(new Banking(500, "출금", "밥", theUser, "내용1"));
+	}
+
+	@Test
+	void nChallengeInsert() {
+
 	}
 }
