@@ -28,13 +28,14 @@ public class NChallengeService {
     private final EntityManager entityManager;
 
     public NChallengeInsertResponseDTO insertNChallenge(NChallengeInsertRequestDTO dto) {
-        User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
+        User theUser = userRepository.findById(dto.getOwnerId()).orElseThrow(
                 () -> new EntityNotFoundException()
         );
 
         NChallenge theChallenge = challengeRepository.save(modelMapper.map(dto, NChallenge.class));
 
         ChallengeUser theParticipant = ChallengeUser.builder()
+                                                    .isSuccess(true)
                                                     .account(dto.getAccount())
                                                     .build();
 
@@ -63,6 +64,7 @@ public class NChallengeService {
         );
 
         ChallengeUser theParticipant = ChallengeUser.builder()
+                                                    .isSuccess(true)
                                                     .account(dto.getAccount())
                                                     .build();
 

@@ -11,7 +11,7 @@ public class ChallengeDTO {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class NChallengeInsertRequestDTO {
 
-        private Long userSeq;
+        private Long ownerId;
 
         private String title;
 

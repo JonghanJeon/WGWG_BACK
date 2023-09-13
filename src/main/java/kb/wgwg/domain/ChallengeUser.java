@@ -34,8 +34,11 @@ public class ChallengeUser {
     @Column(nullable = false)
     private String account;
 
+    // true -> 1, false -> 0
+    // N_Challenge 의 경우 최초 생성 혹은 최초 참여 시점에 기본 값이 true 여야 함
+    // Coffee_Challenge 의 경우 최초 생성 혹은 최초 참여 시점에 기본 값이 false 여야 함
     @Column(name = "is_success")
-    private boolean isSuccess = false;
+    private boolean isSuccess;
 
     public void addParticipant(Challenge theChallenge) {
         this.challenge = theChallenge;
@@ -43,7 +46,8 @@ public class ChallengeUser {
     }
 
     @Builder
-    public ChallengeUser(String account) {
+    public ChallengeUser(String account, boolean isSuccess) {
         this.account = account;
+        this.isSuccess = isSuccess;
     }
 }

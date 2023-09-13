@@ -27,6 +27,9 @@ public abstract class Challenge {
     private Long challengeId;
 
     @Column(nullable = false)
+    private Long ownerId;
+
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
