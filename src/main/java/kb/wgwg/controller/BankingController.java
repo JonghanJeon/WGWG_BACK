@@ -30,9 +30,8 @@ public class BankingController {
     @PostMapping(value = "/read")
     public ResponseEntity<BaseResponseDTO> readBankingsByBankingDate(@RequestBody BankingListRequestDTO dto, @PageableDefault(size = 10) Pageable pageable) {
         BaseResponseDTO<Page<BankingListResponseDTO>> response = new BaseResponseDTO<>();
-        System.out.println(dto.getBankingDate());
         try {
-            Page<BankingListResponseDTO> result = bankingService.findBankingByYearAndMonth(dto.getBankingDate().getYear(), dto.getBankingDate().getMonthValue(), pageable);
+            Page<BankingListResponseDTO> result = bankingService.findBankingByYearAndMonth(dto.getBankingDate().getYear(), dto.getBankingDate().getMonthValue(), dto.getUserSeq(), pageable);
             response.setMessage("성공적으로 입출금 내역을 불러왔습니다.");
             response.setStatus(200);
             response.setSuccess(true);

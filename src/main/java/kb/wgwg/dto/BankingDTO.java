@@ -17,6 +17,7 @@ public class BankingDTO {
     @Builder
     public static final class BankingListRequestDTO { //월별로 요청
         private LocalDateTime bankingDate;
+        private Long userSeq;
     }
 
     @Getter
