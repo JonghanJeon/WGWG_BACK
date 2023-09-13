@@ -44,7 +44,6 @@ public class Banking {
     @Column(nullable = false)
     private String content;
 
-    @CreationTimestamp
     @Column(name = "BANKING_DATE")
     private LocalDateTime bankingDate;
 
