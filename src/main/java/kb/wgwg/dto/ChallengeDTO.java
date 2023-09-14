@@ -315,6 +315,7 @@ public class ChallengeDTO {
         private int deposit;
         private int limitAmount;
         private String challengeType;
+        private String status;
         private Map<String, Boolean> isSuccessList;
     }
 
@@ -328,8 +329,10 @@ public class ChallengeDTO {
         private String description;
         private LocalDateTime startDate;
         private LocalDateTime endDate;
-        private int deposit;
-        private int limitAmount;
+        private String challengeType;
+        private int totalAsset;
+        private int savingAmount;
+        private String status;
         private Map<String, Boolean> isSuccessList;
     }
 }
