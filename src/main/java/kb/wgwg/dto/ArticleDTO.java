@@ -124,4 +124,20 @@ public class ArticleDTO {
             this.commentSize = commentSize;
         }
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ArticleListUserResponseDTO {
+        private LocalDateTime insertDate;
+        private String title;
+        private String category;
+
+        @Builder
+        public ArticleListUserResponseDTO(LocalDateTime insertDate, String title, String category) {
+            this.insertDate = insertDate;
+            this.title = title;
+            this.category = category;
+        }
+    }
 }
