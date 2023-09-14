@@ -18,4 +18,8 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
             " AND cu.CHALLENGE_ID = ci.CHALLENGE_ID " +
             " AND cu.USER_ID = ub.USER_SEQ)", nativeQuery = true)
     void updateChallengeUserStateOfSuccess();
+
+    @Modifying
+    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 2 WHERE USER_ID = ?1 AND CHALLENGE_ID = ?2", nativeQuery = true)
+    void updateIsSuccess(Long userSeq, Long challengeId);
 }
