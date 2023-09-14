@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -115,6 +117,62 @@ public class UserController {
             result.setData(map);
 
             return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            result.setSuccess(false);
+            result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
+    }
+
+    @PostMapping(value = "/read/challenges/process")
+    public ResponseEntity<BaseResponseDTO> readMyProcessingChallengeList(@RequestBody UserReadMyChallengeListRequestDTO dto) {
+        BaseResponseDTO<List<ReadMyProcessingChallengeResponseDTO>> result = new BaseResponseDTO<>();
+
+        try {
+            List<ReadMyProcessingChallengeResponseDTO> response = userService.readMyProcessingChallenge(dto);
+
+            result.setStatus(StatusCode.OK);
+            result.setSuccess(true);
+            result.setMessage("성공적으로 챌린지 목록을 반환했습니다.");
+            result.setData(response);
+
+            return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException e) {
+            result.setStatus(StatusCode.BAD_REQUEST);
+            result.setSuccess(true);
+            result.setMessage(e.getMessage());
+
+            return ResponseEntity.badRequest().body(result);
+        } catch (Exception e) {
+            result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            result.setSuccess(false);
+            result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
+        }
+    }
+
+    @PostMapping(value = "/read/challenges/complete")
+    public ResponseEntity<BaseResponseDTO> readMyCompleteChallengeList(@RequestBody UserReadMyChallengeListRequestDTO dto) {
+        BaseResponseDTO<List<ReadMyCompleteChallengeResponseDTO>> result = new BaseResponseDTO<>();
+
+        try {
+            List<ReadMyCompleteChallengeResponseDTO> response = userService.readMyCompleteChallenge(dto);
+
+            result.setStatus(StatusCode.OK);
+            result.setSuccess(true);
+            result.setMessage("성공적으로 챌린지 목록을 반환했습니다.");
+            result.setData(response);
+
+            return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException e) {
+            result.setStatus(StatusCode.BAD_REQUEST);
+            result.setSuccess(true);
+            result.setMessage(e.getMessage());
+
+            return ResponseEntity.badRequest().body(result);
         } catch (Exception e) {
             result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
             result.setSuccess(false);

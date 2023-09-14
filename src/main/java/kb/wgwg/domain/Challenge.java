@@ -47,6 +47,8 @@ public abstract class Challenge {
     @Column(nullable = false)
     private String challengeType;//NChallenge인지 CoffeeChallenge인지 구분
 
+    private int reward;
+
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE)
     private List<ChallengeUser> participants = new ArrayList<>();
 

@@ -316,7 +316,7 @@ public class ChallengeDTO {
         private int limitAmount;
         private String challengeType;
         private String status;
-        private Map<String, Boolean> isSuccessList;
+        private Map<String, Integer> isSuccessList;
     }
 
     @Getter
@@ -333,6 +333,6 @@ public class ChallengeDTO {
         private int totalAsset;
         private int savingAmount;
         private String status;
-        private Map<String, Boolean> isSuccessList;
+        private Map<String, Integer> isSuccessList;
     }
 }
