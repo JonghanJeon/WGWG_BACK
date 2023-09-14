@@ -220,6 +220,24 @@ public class ChallengeDTO {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class UpdateIsSuccessRequestDTO{
+        private Long challengeId;
+
+        private Long userSeq;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class UpdateAmountRequestDTO{
+        private Long challengeId;
+        private String challengeType;
+        private int amount;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
     @Builder
     public static final class NChallengeUpdateDTO{

@@ -37,4 +37,12 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     @Modifying
     @Query(value = "UPDATE Challenge c SET status = '진행' WHERE TRUNC(START_DATE) = TRUNC(sysdate)", nativeQuery = true)
     void updateChallengeStateToOngoing();
+
+    @Modifying
+    @Query(value = "UPDATE COFFEE_CHALLENGE SET TOTAL_ASSET = TOTAL_ASSET + ?1 WHERE CHALLENGE_ID = ?2", nativeQuery = true)
+    void updateTotalAsset(int amount, Long challengeId);
+
+    @Modifying
+    @Query(value = "UPDATE NCHALLENGE SET TOTAL_DEPOSIT = TOTAL_DEPOSIT + ?1 WHERE CHALLENGE_ID = ?2", nativeQuery = true)
+    void updateTotalDeposit(int amount, Long challengeId);
 }

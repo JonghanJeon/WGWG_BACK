@@ -64,6 +64,10 @@ public class NChallengeService {
         return modelMapper.map(theChallenge, NChallengeInsertResponseDTO.class);
     }
 
+    /**
+     * N Challenge 참여 Logic
+     * @param dto
+     */
     public void participateNChallenge(ChallengeParticipateRequestDTO dto) {
         User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
                 () -> new EntityNotFoundException("해당 사용자를 찾을 수 없습니다.")
