@@ -290,6 +290,7 @@ public class ChallengeDTO {
         private LocalDateTime endDate;
         private int deposit;
         private int limitAmount;
+        private String challengeType;
         private Map<String, Boolean> isSuccessList;
     }
 }

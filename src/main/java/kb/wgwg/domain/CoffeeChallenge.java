@@ -22,9 +22,9 @@ import java.time.LocalDateTime;
 @DiscriminatorValue(value = "COFFEE")
 public class CoffeeChallenge extends Challenge {
 
-    private int totalAsset;
+    private int totalAsset;//모든 참가자의 저축 금액
 
-    private int savingAmount;
+    private int savingAmount;//하루 저축할 금액
 
     @Builder
     public CoffeeChallenge(String title, String description, String status,

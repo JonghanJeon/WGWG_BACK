@@ -6,11 +6,14 @@ import kb.wgwg.repository.ChallengeRepository;
 import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -84,4 +87,9 @@ public class CoffeeChallengeService {
         theParticipant.setParticipant(theUser);
         entityManager.persist(theParticipant);
     }
+
+    public void deleteCoffeeChallenge(Long id) {
+        challengeRepository.deleteByChallengeId(id);
+    }
+
 }

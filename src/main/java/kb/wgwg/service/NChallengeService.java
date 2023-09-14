@@ -157,6 +157,7 @@ public class NChallengeService {
                 .endDate(nchallenge.getEndDate())
                 .deposit(nchallenge.getDeposit())
                 .limitAmount(nchallenge.getLimitAmount())
+                .challengeType(nchallenge.getChallengeType())
                 .isSuccessList(isSuccessList)
                 .build();
     }

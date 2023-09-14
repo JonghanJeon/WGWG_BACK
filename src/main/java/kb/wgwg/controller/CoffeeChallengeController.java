@@ -8,10 +8,7 @@ import kb.wgwg.service.CoffeeChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -45,6 +42,16 @@ public class CoffeeChallengeController {
             response.setSuccess(false);
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    @DeleteMapping(value = "/delete/coffee/{id}")
+    public ResponseEntity deleteCoffeeChallenge(@PathVariable Long id) {
+        BaseResponseDTO result = new BaseResponseDTO<>();
+        coffeeChallengeService.deleteCoffeeChallenge(id);
+        result.setMessage(ResponseMessage.CHALLENGE_UPDATE_SUCCESS);
+        result.setStatus(StatusCode.OK);
+        result.setSuccess(true);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping(value = "/insert/coffee")

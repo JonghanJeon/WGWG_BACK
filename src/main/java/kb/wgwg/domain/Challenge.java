@@ -45,7 +45,7 @@ public abstract class Challenge {
     private LocalDateTime endDate;
 
     @Column(nullable = false)
-    private String challengeType;
+    private String challengeType;//NChallenge인지 CoffeeChallenge인지 구분
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.REMOVE)
     private List<ChallengeUser> participants = new ArrayList<>();
