@@ -1,7 +1,9 @@
 package kb.wgwg.service;
 
-import kb.wgwg.domain.*;
+import kb.wgwg.domain.Challenge;
+import kb.wgwg.domain.CoffeeChallenge;
 import kb.wgwg.dto.ChallengeDTO.*;
+import kb.wgwg.domain.*;
 import kb.wgwg.repository.ChallengeRepository;
 import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -92,4 +94,32 @@ public class CoffeeChallengeService {
         challengeRepository.deleteByChallengeId(id);
     }
 
+
+    @Transactional(readOnly = true)
+    public Page<CoffeeChallengeListResponseDTO> findNChallengeByStatus(ChallengeListRequestDTO requestDTO, Pageable pageable) {
+        Page<Challenge> page;
+        if(requestDTO.getStatus().equals("전체보기")) {
+            page = challengeRepository.findAllByChallengeType(requestDTO.getChallengeType(), pageable);
+        } else {
+            page = challengeRepository.findAllByStatusAndChallengeType(requestDTO.getStatus(), requestDTO.getChallengeType(), pageable);
+        }
+
+        // Page<Challenge>을 Page<CoffeeChallenge>로 변환
+        Page<CoffeeChallenge> coffeeChallengePage = page.map(challenge -> (CoffeeChallenge) challenge);
+        Page<CoffeeChallengeListResponseDTO> dtoPage = coffeeChallengePage.map(new Function<CoffeeChallenge, CoffeeChallengeListResponseDTO>() {
+            @Override
+            public CoffeeChallengeListResponseDTO apply(CoffeeChallenge ch) {
+                CoffeeChallengeListResponseDTO dto = CoffeeChallengeListResponseDTO.builder()
+                        .challengeId(ch.getChallengeId())
+                        .title(ch.getTitle())
+                        .status(ch.getStatus())
+                        .savingAmount(ch.getSavingAmount())
+                        .startDate(ch.getStartDate())
+                        .endDate(ch.getEndDate())
+                        .build();
+                return dto;
+            }
+        });
+        return dtoPage;
+    }
 }
