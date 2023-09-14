@@ -102,7 +102,7 @@ public class UserService {
                 .map(ChallengeUser::getChallenge)
                 .map(challenge -> modelMapper.map(challenge, ReadMyCompleteChallengeResponseDTO.class))
                 .collect(Collectors.toList());
-
+        
         return myChallengeList;
     }
 }
