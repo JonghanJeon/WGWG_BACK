@@ -113,7 +113,7 @@ public class NChallengeController {
     }
 
     @PostMapping(value = "/read/n")
-    public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody NChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody ChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
         BaseResponseDTO<Page<NChallengeListResponseDTO>> response = new BaseResponseDTO<>();
         try {
             Page<NChallengeListResponseDTO> result = nChallengeService.findNChallengeByStatus(requestDTO, pageable);
