@@ -159,6 +159,7 @@ public class NChallengeService {
                 .deposit(nchallenge.getDeposit())
                 .limitAmount(nchallenge.getLimitAmount())
                 .challengeType(nchallenge.getChallengeType())
+                .status(nchallenge.getStatus())
                 .isSuccessList(isSuccessList)
                 .build();
     }

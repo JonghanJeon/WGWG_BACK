@@ -315,6 +315,7 @@ public class ChallengeDTO {
         private int deposit;
         private int limitAmount;
         private String challengeType;
+        private String status;
         private Map<String, Boolean> isSuccessList;
     }
 
