@@ -144,4 +144,27 @@ public class CoffeeChallengeController {
             return ResponseEntity.internalServerError().body(response);
         }
     }
+
+    @GetMapping(value = "/read/coffee/{id}")
+    public ResponseEntity<BaseResponseDTO> readNChallenge(@PathVariable Long id) {
+        BaseResponseDTO<CoffeeChallengeReadResponseDTO> response = new BaseResponseDTO<>();
+
+        try {
+            CoffeeChallengeReadResponseDTO result = coffeeChallengeService.findCoffeeChallengeById(id);
+            response.setMessage("성공적으로 챌린지를 불러왔습니다.");
+            response.setStatus(200);
+            response.setSuccess(true);
+            response.setData(result);
+        } catch (EntityNotFoundException e) {
+            response.setMessage(e.getMessage());
+            response.setStatus(404);
+            response.setSuccess(false);
+        } catch (Exception e) {
+            response.setMessage(INTERNAL_SERVER_ERROR);
+            response.setStatus(500);
+            response.setSuccess(false);
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }

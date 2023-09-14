@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -121,5 +123,31 @@ public class CoffeeChallengeService {
             }
         });
         return dtoPage;
+    }
+    @Transactional(readOnly = true)
+    public CoffeeChallengeReadResponseDTO findCoffeeChallengeById(Long id) {
+        CoffeeChallenge coffeechallenge = (CoffeeChallenge) challengeRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("해당 챌린지를 찾을 수 없습니다.")
+        );
+
+        Map<String, Boolean> isSuccessList = new HashMap<>();
+        for (ChallengeUser participant : coffeechallenge.getParticipants()) {
+            isSuccessList.put(
+                    participant.getParticipant().getNickName(),
+                    participant.isSuccess()
+            );
+        }
+        System.out.println("isSuccessList = " + isSuccessList);
+        return CoffeeChallengeReadResponseDTO.builder()
+                .title(coffeechallenge.getTitle())
+                .description(coffeechallenge.getDescription())
+                .startDate(coffeechallenge.getStartDate())
+                .endDate(coffeechallenge.getEndDate())
+                .challengeType(coffeechallenge.getChallengeType())
+                .totalAsset(coffeechallenge.getTotalAsset())
+                .savingAmount(coffeechallenge.getSavingAmount())
+                .status(coffeechallenge.getStatus())
+                .isSuccessList(isSuccessList)
+                .build();
     }
 }
