@@ -2,6 +2,8 @@ package kb.wgwg.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 public class UserDTO {
 
     @Getter
@@ -92,5 +94,80 @@ public class UserDTO {
     public static final class UserUpdateDTO{
         private Long userSeq;
         private String password;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class UserReadMyChallengeListRequestDTO {
+
+        private Long userSeq;
+
+        private String status;
+
+        @Builder
+        public UserReadMyChallengeListRequestDTO(Long userSeq, String status)
+        {
+            this.userSeq = userSeq;
+            this.status = status;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ReadMyProcessingChallengeResponseDTO {
+
+        private String title;
+
+        private LocalDateTime startDate;
+
+        private LocalDateTime endDate;
+
+        private String status;
+
+        private String challengeType;
+
+        @Builder
+
+        public ReadMyProcessingChallengeResponseDTO(String title, LocalDateTime startDate, LocalDateTime endDate,
+                                                    String status, String challengeType)
+        {
+            this.title = title;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.status = status;
+            this.challengeType = challengeType;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ReadMyCompleteChallengeResponseDTO {
+
+        private String title;
+
+        private LocalDateTime startDate;
+
+        private LocalDateTime endDate;
+
+        private int isSuccess;
+
+        private int reward;
+
+        private String challengeType;
+
+        @Builder
+
+        public ReadMyCompleteChallengeResponseDTO(String title, LocalDateTime startDate, LocalDateTime endDate,
+                                                    int isSuccess, String challengeType)
+        {
+            this.title = title;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.isSuccess = isSuccess;
+            this.challengeType = challengeType;
+        }
     }
 }

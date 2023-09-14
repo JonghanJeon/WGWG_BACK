@@ -48,14 +48,10 @@ public class BankingService {
 
     public Page<BankingListResponseDTO> findBankingByYearAndMonth(int year, int month, Long userSeq,Pageable pageable) {
         Page<Banking> page = bankingRepository.findMonth(year, month, userSeq, pageable);
-        System.out.println(page);
 
         Page<BankingListResponseDTO> dtoPage = page.map(new Function<Banking, BankingListResponseDTO>() {
             @Override
             public BankingListResponseDTO apply(Banking banking) {
-                System.out.println("****************");
-                System.out.println(banking.getBankingDate());
-
                 BankingListResponseDTO dto = BankingListResponseDTO.builder()
                         .bankingId(banking.getBankingId())
                         .bankingDate(banking.getBankingDate())

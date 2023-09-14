@@ -1,7 +1,7 @@
 package kb.wgwg.service;
 
+import kb.wgwg.domain.ChallengeUser;
 import kb.wgwg.domain.User;
-import kb.wgwg.dto.ArticleDTO;
 import kb.wgwg.dto.UserDTO.*;
 import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static kb.wgwg.common.ResponseMessage.NOT_FOUND_USER;
 
 @Service
 @Transactional
@@ -70,5 +74,35 @@ public class UserService {
 
     public void updatePassword(UserUpdateDTO dto) throws Exception {
         userRepository.updateUserPassword(dto.getPassword(), dto.getUserSeq());
+    }
+
+    public List<ReadMyProcessingChallengeResponseDTO> readMyProcessingChallenge(UserReadMyChallengeListRequestDTO dto) {
+
+        User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException(NOT_FOUND_USER)
+        );
+
+        List<ReadMyProcessingChallengeResponseDTO> myChallengeList = theUser.getParticipants().stream()
+                .filter(participant -> dto.getStatus().equals(participant.getChallenge().getStatus()))
+                .map(ChallengeUser::getChallenge)
+                .map(challenge -> modelMapper.map(challenge, ReadMyProcessingChallengeResponseDTO.class))
+                .collect(Collectors.toList());
+
+        return myChallengeList;
+    }
+
+    public List<ReadMyCompleteChallengeResponseDTO> readMyCompleteChallenge(UserReadMyChallengeListRequestDTO dto) {
+
+        User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException(NOT_FOUND_USER)
+        );
+
+        List<ReadMyCompleteChallengeResponseDTO> myChallengeList = theUser.getParticipants().stream()
+                .filter(participant -> dto.getStatus().equals(participant.getChallenge().getStatus()))
+                .map(ChallengeUser::getChallenge)
+                .map(challenge -> modelMapper.map(challenge, ReadMyCompleteChallengeResponseDTO.class))
+                .collect(Collectors.toList());
+
+        return myChallengeList;
     }
 }

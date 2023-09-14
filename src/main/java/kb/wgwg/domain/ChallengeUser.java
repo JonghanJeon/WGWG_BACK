@@ -34,11 +34,16 @@ public class ChallengeUser {
     @Column(nullable = false)
     private String account;
 
-    // true -> 1, false -> 0
-    // N_Challenge 의 경우 최초 생성 혹은 최초 참여 시점에 기본 값이 true 여야 함
-    // Coffee_Challenge 의 경우 최초 생성 혹은 최초 참여 시점에 기본 값이 false 여야 함
+    // Coffee Challenge
+    // 탈락 0
+    // 입금전 1
+    // 입금 완료 2
+    // ===============
+    // N Challenge
+    // 탈락 0
+    // 생존 1
     @Column(name = "is_success")
-    private boolean isSuccess;
+    private int isSuccess;
 
     @Column(nullable = false)
     private String challengeType;
@@ -49,7 +54,7 @@ public class ChallengeUser {
     }
 
     @Builder
-    public ChallengeUser(String account, boolean isSuccess, String challengeType) {
+    public ChallengeUser(String account, int isSuccess, String challengeType) {
         this.account = account;
         this.isSuccess = isSuccess;
         this.challengeType = challengeType;

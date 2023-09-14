@@ -88,4 +88,22 @@ public class ArticleService {
 
         return dtoPage;
     }
+
+    @Transactional(readOnly = true)
+    public Page<ArticleListUserResponseDTO> findArticleByUser(Long userSeq, Pageable pageable) {
+        Page<Article> page = repository.findAllByUserSeq(userSeq, pageable);
+        Page<ArticleListUserResponseDTO> dtoPage = page.map(new Function<Article, ArticleListUserResponseDTO>() {
+            @Override
+            public ArticleListUserResponseDTO apply(Article article) {
+                ArticleListUserResponseDTO dto = ArticleListUserResponseDTO.builder()
+                        .insertDate(article.getInsertDate())
+                        .title(article.getTitle())
+                        .category(article.getCategory())
+                        .build();
+
+                return dto;
+            }
+        });
+        return dtoPage;
+    }
 }
