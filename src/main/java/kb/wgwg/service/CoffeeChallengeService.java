@@ -48,7 +48,7 @@ public class CoffeeChallengeService {
         CoffeeChallenge theChallenge = challengeRepository.save(modelMapper.map(dto, CoffeeChallenge.class));
 
         ChallengeUser theParticipant = ChallengeUser.builder()
-                .isSuccess(true)
+                .isSuccess(1)
                 .account(dto.getAccount())
                 .challengeType(dto.getChallengeType())
                 .build();
@@ -82,7 +82,7 @@ public class CoffeeChallengeService {
         }
 
         ChallengeUser theParticipant = ChallengeUser.builder()
-                .isSuccess(true)
+                .isSuccess(1)
                 .account(dto.getAccount())
                 .challengeType(dto.getChallengeType())
                 .build();
@@ -130,11 +130,11 @@ public class CoffeeChallengeService {
                 () -> new EntityNotFoundException("해당 챌린지를 찾을 수 없습니다.")
         );
 
-        Map<String, Boolean> isSuccessList = new HashMap<>();
+        Map<String, Integer> isSuccessList = new HashMap<>();
         for (ChallengeUser participant : coffeechallenge.getParticipants()) {
             isSuccessList.put(
                     participant.getParticipant().getNickName(),
-                    participant.isSuccess()
+                    participant.getIsSuccess()
             );
         }
         System.out.println("isSuccessList = " + isSuccessList);

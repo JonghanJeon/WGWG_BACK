@@ -47,8 +47,8 @@ public class Banking {
     @Column(name = "BANKING_DATE")
     private LocalDateTime bankingDate;
 
-    //@JoinColumn(name = "challenge_id")
-    //private Long challengeId;
+    @JoinColumn(name = "challenge_id")
+    private Long challengeId;
 
     @Column(nullable = false)
     private String category;
