@@ -40,8 +40,11 @@ class WgwgApplicationTests {
 
 	@Test
 	void articleInsert() {
-		User theUser = userRep.findById(1L).orElseThrow();
+		User theUser = userRep.findById(2L).orElseThrow();
 		articleRep.save(new Article("제목1", "내용1", "카테고리1", theUser));
+		articleRep.save(new Article("제목2", "내용1", "카테고리1", theUser));
+		articleRep.save(new Article("제목3", "내용1", "카테고리1", theUser));
+
 	}
 
 	@Test
