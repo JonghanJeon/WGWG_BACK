@@ -3,7 +3,6 @@ package kb.wgwg.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
 public class ChallengeDTO {
@@ -132,7 +131,82 @@ public class ChallengeDTO {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static final class NChallengeParticipateRequestDTO {
+    public static final class CoffeeChallengeInsertRequestDTO {
+
+        private Long ownerId;
+
+        private String title;
+
+        private String description;
+
+        private String status;
+
+        private LocalDateTime startDate;
+
+        private LocalDateTime endDate;
+
+        private String account;
+
+        private int savingAmount;
+
+        private String challengeType;
+
+        @Builder
+        public CoffeeChallengeInsertRequestDTO(String title, String description, String status,
+                                          LocalDateTime startDate, LocalDateTime endDate, int savingAmount,
+                                          String account, String challengeType)
+        {
+            this.title = title;
+            this.description = description;
+            this.status = status;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.savingAmount = savingAmount;
+            this.account = account;
+            this.challengeType = challengeType;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class CoffeeChallengeInsertResponseDTO {
+
+        private Long challengeId;
+
+        private String title;
+
+        private String description;
+
+        private String status;
+
+        private LocalDateTime startDate;
+
+        private LocalDateTime endDate;
+
+        private int savingAmount;
+
+        private String challengeType;
+
+        @Builder
+        public CoffeeChallengeInsertResponseDTO(Long challengeId, String title, String description, String status,
+                                           LocalDateTime startDate, LocalDateTime endDate, int savingAmount, String challengeType)
+        {
+            this.challengeId = challengeId;
+            this.title = title;
+            this.description = description;
+            this.status = status;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.savingAmount = savingAmount;
+            this.challengeType = challengeType;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ChallengeParticipateRequestDTO {
 
         private Long challengeId;
 

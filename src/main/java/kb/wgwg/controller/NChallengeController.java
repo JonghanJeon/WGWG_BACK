@@ -4,7 +4,6 @@ import kb.wgwg.common.ResponseMessage;
 import kb.wgwg.common.StatusCode;
 import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.dto.ChallengeDTO.*;
-import kb.wgwg.service.CoffeeChallengeService;
 import kb.wgwg.service.NChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -54,7 +53,7 @@ public class NChallengeController {
     }
 
     @PostMapping(value = "/participate/n")
-    public ResponseEntity<BaseResponseDTO> participateNChallenge(@RequestBody NChallengeParticipateRequestDTO dto) {
+    public ResponseEntity<BaseResponseDTO> participateNChallenge(@RequestBody ChallengeParticipateRequestDTO dto) {
         BaseResponseDTO<Void> response = new BaseResponseDTO<>();
         try {
             nChallengeService.participateNChallenge(dto);

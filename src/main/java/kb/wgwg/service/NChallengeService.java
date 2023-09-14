@@ -15,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -66,7 +64,7 @@ public class NChallengeService {
         return modelMapper.map(theChallenge, NChallengeInsertResponseDTO.class);
     }
 
-    public void participateNChallenge(NChallengeParticipateRequestDTO dto) {
+    public void participateNChallenge(ChallengeParticipateRequestDTO dto) {
         User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
                 EntityNotFoundException::new
         );
