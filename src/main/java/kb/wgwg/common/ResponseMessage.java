@@ -25,9 +25,9 @@ public class ResponseMessage {
 
 
     //챌린지
-    public static final String READ_CHALLENGELIST_SUCCESS = "N챌린지 조회 성공";
-    public static final String N_CHALLENGE_UPDATE_SUCCESS = "N챌린지 수정 성공";
-    public static final String NOT_FOUND_N_CHALLENGE = "N챌린지를 찾을 수 없습니다.";
+    public static final String READ_CHALLENGELIST_SUCCESS = "챌린지 조회 성공";
+    public static final String CHALLENGE_UPDATE_SUCCESS = "챌린지 수정 성공";
+    public static final String NOT_FOUND_CHALLENGE = "챌린지를 찾을 수 없습니다.";
 
 
     //가계부
