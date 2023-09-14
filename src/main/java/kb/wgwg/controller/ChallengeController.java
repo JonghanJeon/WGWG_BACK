@@ -74,6 +74,12 @@ public class ChallengeController {
             response.setSuccess(false);
 
             return ResponseEntity.badRequest().body(response);
+        } catch (IndexOutOfBoundsException e) {
+            response.setMessage("참여자가 가득 차 더 이상 참여가 불가능합니다.");
+            response.setStatus(400);
+            response.setSuccess(false);
+
+            return ResponseEntity.badRequest().body(response);
         } catch (Exception e) {
             response.setMessage(INTERNAL_SERVER_ERROR);
             response.setStatus(500);

@@ -31,6 +31,8 @@ public class NChallengeService {
     private final ModelMapper modelMapper;
     private final EntityManager entityManager;
 
+    private static final int LIMIT_CHALLENGE_USER_SIZE = 30;
+
     public NChallengeInsertResponseDTO insertNChallenge(NChallengeInsertRequestDTO dto) {
         User theUser = userRepository.findById(dto.getOwnerId()).orElseThrow(
                 () -> new EntityNotFoundException()
@@ -80,6 +82,10 @@ public class NChallengeService {
                     }
                 }
         );
+
+        if (theChallenge.getParticipants().size() == LIMIT_CHALLENGE_USER_SIZE) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
 
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(true)
