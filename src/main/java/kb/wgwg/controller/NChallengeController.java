@@ -112,7 +112,7 @@ public class NChallengeController {
         }
     }
 
-    @PostMapping(value = "/read")
+    @PostMapping(value = "/read/n")
     public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody NChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
         BaseResponseDTO<Page<NChallengeListResponseDTO>> response = new BaseResponseDTO<>();
         try {
@@ -135,7 +135,7 @@ public class NChallengeController {
         }
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/delete/n/{id}")
     public ResponseEntity deleteNChallenge(@PathVariable Long id) {
         BaseResponseDTO result = new BaseResponseDTO<>();
         nChallengeService.deleteNChallenge(id);
@@ -145,7 +145,7 @@ public class NChallengeController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/read/{id}")
+    @GetMapping(value = "/read/n/{id}")
     public ResponseEntity<BaseResponseDTO> readNChallenge(@PathVariable Long id) {
         BaseResponseDTO<NChallengeReadResponseDTO> response = new BaseResponseDTO<>();
 
