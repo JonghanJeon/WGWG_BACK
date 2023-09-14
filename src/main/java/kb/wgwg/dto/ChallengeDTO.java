@@ -159,6 +159,20 @@ public class ChallengeDTO {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class CoffeeChallengeUpdateDTO{
+        private Long challengeId;
+        private String title;
+        private String description;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private int savingAmount;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class NChallengeListRequestDTO {
         private String status;
 

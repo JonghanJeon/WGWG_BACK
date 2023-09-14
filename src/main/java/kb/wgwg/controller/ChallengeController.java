@@ -2,8 +2,10 @@ package kb.wgwg.controller;
 
 import kb.wgwg.common.ResponseMessage;
 import kb.wgwg.common.StatusCode;
+import kb.wgwg.domain.CoffeeChallenge;
 import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.dto.ChallengeDTO.*;
+import kb.wgwg.service.CoffeeChallengeService;
 import kb.wgwg.service.NChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,7 @@ import static kb.wgwg.common.ResponseMessage.INTERNAL_SERVER_ERROR;
 public class ChallengeController {
 
     private final NChallengeService nChallengeService;
+    private final CoffeeChallengeService coffeeChallengeService;
 
     @PostMapping(value = "/insert")
     public ResponseEntity<BaseResponseDTO> createChallenge(@RequestBody NChallengeInsertRequestDTO dto) {
@@ -89,19 +92,42 @@ public class ChallengeController {
         }
     }
 
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/update/n")
     public ResponseEntity<BaseResponseDTO> updateNChallenge(@RequestBody NChallengeUpdateDTO dto) {
         BaseResponseDTO response = new BaseResponseDTO();
         try {
             int updateRows = nChallengeService.updateNChallenge(dto);
             response.setStatus(StatusCode.OK);
-            response.setMessage(ResponseMessage.N_CHALLENGE_UPDATE_SUCCESS);
+            response.setMessage(ResponseMessage.CHALLENGE_UPDATE_SUCCESS);
             response.setSuccess(true);
             response.setData(updateRows);
             return ResponseEntity.ok(response);
         } catch (EntityNotFoundException e){
             response.setStatus(StatusCode.BAD_REQUEST);
-            response.setMessage(ResponseMessage.NOT_FOUND_N_CHALLENGE);
+            response.setMessage(ResponseMessage.NOT_FOUND_CHALLENGE);
+            response.setSuccess(false);
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e){
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            response.setSuccess(false);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    @PostMapping(value = "/update/coffe")
+    public ResponseEntity<BaseResponseDTO> updateCoffeeChallenge(@RequestBody CoffeeChallengeUpdateDTO dto) {
+        BaseResponseDTO response = new BaseResponseDTO();
+        try {
+            int updateRows = coffeeChallengeService.updateCoffeeChallenge(dto);
+            response.setStatus(StatusCode.OK);
+            response.setMessage(ResponseMessage.CHALLENGE_UPDATE_SUCCESS);
+            response.setSuccess(true);
+            response.setData(updateRows);
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e){
+            response.setStatus(StatusCode.BAD_REQUEST);
+            response.setMessage(ResponseMessage.NOT_FOUND_CHALLENGE);
             response.setSuccess(false);
             return ResponseEntity.badRequest().body(response);
         } catch (Exception e){
