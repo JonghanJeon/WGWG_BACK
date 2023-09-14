@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 
-    Page<Challenge> findAllByStatus(String status, Pageable pageable);
+    Page<Challenge> findAllByStatusAndChallengeType(String status, String challengeType,Pageable pageable);
+    Page<Challenge> findAllByChallengeType(String challengeType,Pageable pageable);
 
     @Modifying
     @Query("UPDATE NChallenge " +

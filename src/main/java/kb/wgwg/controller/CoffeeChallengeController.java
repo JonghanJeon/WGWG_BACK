@@ -6,6 +6,9 @@ import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.dto.ChallengeDTO.*;
 import kb.wgwg.service.CoffeeChallengeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -115,6 +118,29 @@ public class CoffeeChallengeController {
             response.setStatus(500);
             response.setSuccess(false);
 
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
+
+    @PostMapping(value = "/read/coffee")
+    public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody ChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
+        BaseResponseDTO<Page<CoffeeChallengeListResponseDTO>> response = new BaseResponseDTO<>();
+        try {
+            Page<CoffeeChallengeListResponseDTO> result = coffeeChallengeService.findNChallengeByStatus(requestDTO, pageable);
+            response.setMessage(ResponseMessage.READ_CHALLENGELIST_SUCCESS);
+            response.setStatus(StatusCode.OK);
+            response.setSuccess(true);
+            response.setData(result);
+            return ResponseEntity.ok(response);
+        } catch (EntityNotFoundException e) {
+            response.setMessage(e.getMessage());
+            response.setStatus(StatusCode.NOT_FOUND);
+            response.setSuccess(false);
+            return ResponseEntity.badRequest().body(response);
+        } catch (Exception e) {
+            response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setSuccess(false);
             return ResponseEntity.internalServerError().body(response);
         }
     }

@@ -109,12 +109,13 @@ public class NChallengeService {
     }
 
     @Transactional(readOnly = true)
-    public Page<NChallengeListResponseDTO> findNChallengeByStatus(NChallengeListRequestDTO requestDTO, Pageable pageable) {
+    public Page<NChallengeListResponseDTO> findNChallengeByStatus(ChallengeListRequestDTO requestDTO, Pageable pageable) {
         Page<Challenge> page;
+
         if(requestDTO.getStatus().equals("전체보기")) {
-            page = challengeRepository.findAll(pageable);
+            page = challengeRepository.findAllByChallengeType(requestDTO.getChallengeType(), pageable);
         } else {
-            page = challengeRepository.findAllByStatus(requestDTO.getStatus(), pageable);
+            page = challengeRepository.findAllByStatusAndChallengeType(requestDTO.getStatus(), requestDTO.getChallengeType(), pageable);
         }
 
         // Page<Challenge>을 Page<NChallenge>로 변환

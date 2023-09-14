@@ -247,12 +247,36 @@ public class ChallengeDTO {
     @Getter
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static final class NChallengeListRequestDTO {
+    public static final class ChallengeListRequestDTO {
         private String status;
+        private String challengeType;
 
         @Builder
-        public NChallengeListRequestDTO(String status){
+        public ChallengeListRequestDTO(String status){
             this.status = status;
+            this.challengeType = challengeType;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class CoffeeChallengeListResponseDTO {
+        private Long challengeId;
+        private String title;
+        private String status;
+        private int savingAmount;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+
+        @Builder
+        public CoffeeChallengeListResponseDTO(Long challengeId, String title, String status, int savingAmount, LocalDateTime startDate, LocalDateTime endDate) {
+            this.challengeId = challengeId;
+            this.title = title;
+            this.status = status;
+            this.savingAmount = savingAmount;
+            this.startDate = startDate;
+            this.endDate = endDate;
         }
     }
 
@@ -291,6 +315,21 @@ public class ChallengeDTO {
         private int deposit;
         private int limitAmount;
         private String challengeType;
+        private Map<String, Boolean> isSuccessList;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class CoffeeChallengeReadResponseDTO {
+        private String title;
+        private String description;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private int deposit;
+        private int limitAmount;
         private Map<String, Boolean> isSuccessList;
     }
 }
