@@ -35,7 +35,7 @@ public class CoffeeChallengeService {
 
     public CoffeeChallengeInsertResponseDTO insertCoffeeChallenge(CoffeeChallengeInsertRequestDTO dto) {
         User theUser = userRepository.findById(dto.getOwnerId()).orElseThrow(
-                () -> new EntityNotFoundException()
+                () -> new EntityNotFoundException("해당 사용자를 찾을 수 없습니다.")
         );
 
         CoffeeChallenge theChallenge = challengeRepository.save(modelMapper.map(dto, CoffeeChallenge.class));
@@ -55,11 +55,11 @@ public class CoffeeChallengeService {
 
     public void participateCoffeeChallenge(ChallengeParticipateRequestDTO dto) {
         User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
-                EntityNotFoundException::new
+                () -> new EntityNotFoundException("해당 사용자를 찾을 수 없습니다.")
         );
 
         Challenge theChallenge = challengeRepository.findById(dto.getChallengeId()).orElseThrow(
-                EntityNotFoundException::new
+                () -> new EntityNotFoundException("해당 챌린지를 찾을 수 없습니다.")
         );
 
         theChallenge.getParticipants().stream().forEach(
