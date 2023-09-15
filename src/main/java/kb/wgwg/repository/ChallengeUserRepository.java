@@ -38,4 +38,5 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
 
     @Query(value = "SELECT USER_ID FROM CHALLENGE_USER cu WHERE IS_SUCCESS = 1 AND CHALLENGE_ID = ?1", nativeQuery = true)
     List<Long> findNChallengeUsersByChallengeId(Long challengeId);
+
 }

@@ -47,10 +47,19 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     @Query(value = "UPDATE NCHALLENGE SET TOTAL_DEPOSIT = TOTAL_DEPOSIT + ?1 WHERE CHALLENGE_ID = ?2", nativeQuery = true)
     void updateTotalDeposit(int amount, Long challengeId);
 
+    @Modifying
+    @Query(value = "UPDATE CHALLENGE SET REWARD = ?1 WHERE CHALLENGE_ID = ?2", nativeQuery = true)
+    void updateRewardByChallengeId(int updatedReward, Long challengeId);
 
     @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_ASSET FROM COFFEE_CHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE TRUNC(c.END_DATE) = TRUNC(?1)", nativeQuery = true)
     List<Object[]> findFinishedCoffeeChallenge(LocalDateTime endDate);
 
+    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_ASSET FROM COFFEE_CHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행\'", nativeQuery = true)
+    List<Object[]> findOngoingCoffeeChallenge();
+
     @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE TRUNC(c.END_DATE) = TRUNC(?1)", nativeQuery = true)
     List<Object[]> findFinishedNChallenge(LocalDateTime endDate);
+
+    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행\'", nativeQuery = true)
+    List<Object[]> findOngoingNChallenge();
 }
