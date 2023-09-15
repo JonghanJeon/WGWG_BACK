@@ -123,7 +123,7 @@ public class CoffeeChallengeController {
     }
 
     @PostMapping(value = "/read/coffee")
-    public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody ChallengeListRequestDTO requestDTO, @PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<BaseResponseDTO> readNChallengeByStatus(@RequestBody ChallengeListRequestDTO requestDTO, @PageableDefault(size = 8) Pageable pageable) {
         BaseResponseDTO<Page<CoffeeChallengeListResponseDTO>> response = new BaseResponseDTO<>();
         try {
             Page<CoffeeChallengeListResponseDTO> result = coffeeChallengeService.findNChallengeByStatus(requestDTO, pageable);
