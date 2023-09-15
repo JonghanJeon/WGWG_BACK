@@ -148,6 +148,7 @@ public class CoffeeChallengeService {
                 .savingAmount(coffeechallenge.getSavingAmount())
                 .status(coffeechallenge.getStatus())
                 .isSuccessList(isSuccessList)
+                .reward(coffeechallenge.getReward())
                 .build();
     }
 }
