@@ -115,6 +115,7 @@ public class BankingService {
                 .category(dto.getCategory())
                 .bankingDate(insertDate)
                 .content(dto.getContent())
+                .challengeId(dto.getChallengeId())
                 .build();
 
         Banking saved = bankingRepository.save(banking);

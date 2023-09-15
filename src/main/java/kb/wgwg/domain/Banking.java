@@ -54,13 +54,14 @@ public class Banking {
     private String category;
 
     @Builder
-    public Banking(User owner, int amount, String type, LocalDateTime bankingDate, String category, String content) {
+    public Banking(User owner, int amount, String type, LocalDateTime bankingDate, String category, String content, Long challengeId) {
         this.owner = owner;
         this.amount = amount;
         this.type = type;
         this.bankingDate = bankingDate;
         this.category = category;
         this.content = content;
+        this.challengeId = challengeId;
     }
 
     public void updateAmount(int amount){ this.amount = amount; }
