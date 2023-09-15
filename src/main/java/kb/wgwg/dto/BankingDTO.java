@@ -112,5 +112,6 @@ public class BankingDTO {
         private String bankingDate;
         private String category;
         private String content;
+        private Long challengeId;
     }
 }
