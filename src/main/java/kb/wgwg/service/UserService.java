@@ -1,5 +1,6 @@
 package kb.wgwg.service;
 
+import kb.wgwg.domain.Challenge;
 import kb.wgwg.domain.ChallengeUser;
 import kb.wgwg.domain.User;
 import kb.wgwg.dto.UserDTO.*;
@@ -99,10 +100,14 @@ public class UserService {
 
         List<ReadMyCompleteChallengeResponseDTO> myChallengeList = theUser.getParticipants().stream()
                 .filter(participant -> dto.getStatus().equals(participant.getChallenge().getStatus()))
-                .map(ChallengeUser::getChallenge)
-                .map(challenge -> modelMapper.map(challenge, ReadMyCompleteChallengeResponseDTO.class))
+                .map(participant -> {
+                    ReadMyCompleteChallengeResponseDTO responseDTO = modelMapper.map(participant.getChallenge(),
+                            ReadMyCompleteChallengeResponseDTO.class);
+                    responseDTO.setIsSuccess(participant.getIsSuccess());
+                    return responseDTO;
+                })
                 .collect(Collectors.toList());
-        
+
         return myChallengeList;
     }
 }
