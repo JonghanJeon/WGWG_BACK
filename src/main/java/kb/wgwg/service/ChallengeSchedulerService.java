@@ -25,7 +25,7 @@ public class ChallengeSchedulerService {
     /**
      * 챌린지 진행 상태 업데이트
      */
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "2 0 0 * * *")
     public void updateChallengeStatus(){
         //진행 -> 종료
         challengeRepository.updateChallengeStateToFinish();
@@ -35,20 +35,48 @@ public class ChallengeSchedulerService {
     }
 
     /**
-     * N챌린지 참여자의 성공 여부 업데이트
+     * 챌린지 참여자의 진행 상태 업데이트
      */
-    @Scheduled(cron = "1 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void updateChallengeUserStatusOfSuccess(){
+        //N챌린지
         challengeUserRepository.updateChallengeUserStateOfSuccess();
+        
+        //coffee 챌린지
+        challengeUserRepository.updateChallengeUserStateOfSuccessToFail();
+        challengeUserRepository.updateChallengeUserStateOfSuccessToNotyet();
     }
 
     /**
-     * Coffee 챌린지 참여자의 성공 여부 업데이트
+     * N챌린지 리워드 값 업데이트
      */
     @Scheduled(cron = "1 0 0 * * *")
-    public void updateCoffeeChallengeUserStatus(){
-        challengeUserRepository.updateChallengeUserStateOfSuccessToFail();
-        challengeUserRepository.updateChallengeUserStateOfSuccessToNotyet();
+    public void updateNReward(){
+        List<Object[]> ongoingChallenge = challengeRepository.findOngoingNChallenge();
+
+        for(Object[] challenge : ongoingChallenge){
+            Long challengeID = ((BigDecimal) challenge[0]).longValue();
+            int numOfSuccess = challengeUserRepository.findNChallengeUsersByChallengeId(challengeID).size();
+            int reward = ((BigDecimal) challenge[1]).intValue() / numOfSuccess;
+
+            challengeRepository.updateRewardByChallengeId(reward, challengeID);
+        }
+    }
+
+    /**
+     * Coffee챌린지 리워드 값 업데이트
+     */
+    @Scheduled(cron = "1 0 0 * * *")
+    public void updateCoffeeReward(){
+        List<Object[]> ongoingChallenge = challengeRepository.findOngoingCoffeeChallenge();
+
+        for(Object[] challenge : ongoingChallenge){
+            Long challengeID = ((BigDecimal) challenge[0]).longValue();
+            int numOfSuccess = challengeUserRepository.findNChallengeUsersByChallengeId(challengeID).size();
+            int reward = ((BigDecimal) challenge[1]).intValue() / numOfSuccess;
+
+            challengeRepository.updateRewardByChallengeId(reward, challengeID);
+        }
     }
 
     /**
@@ -96,7 +124,8 @@ public class ChallengeSchedulerService {
                 dto.setAmount(reward);
                 dto.setBankingDate(String.valueOf(LocalDateTime.now()));
                 dto.setCategory("챌린지");
-                dto.setContent(((BigDecimal) o[0]).toPlainString());
+                dto.setChallengeId(((BigDecimal) o[0]).longValue());
+                dto.setContent("챌린지 리워드 입금");
 
                 bankingService.insertBankingHistory(dto);
             }
