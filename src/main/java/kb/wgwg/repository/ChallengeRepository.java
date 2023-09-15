@@ -1,13 +1,14 @@
 package kb.wgwg.repository;
 
 import kb.wgwg.domain.Challenge;
-import org.springframework.cglib.core.Local;
+import kb.wgwg.dto.ChallengeDTO.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
@@ -45,4 +46,11 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     @Modifying
     @Query(value = "UPDATE NCHALLENGE SET TOTAL_DEPOSIT = TOTAL_DEPOSIT + ?1 WHERE CHALLENGE_ID = ?2", nativeQuery = true)
     void updateTotalDeposit(int amount, Long challengeId);
+
+
+    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_ASSET FROM COFFEE_CHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE TRUNC(c.END_DATE) = TRUNC(?1)", nativeQuery = true)
+    List<Object[]> findFinishedCoffeeChallenge(LocalDateTime endDate);
+
+    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE TRUNC(c.END_DATE) = TRUNC(?1)", nativeQuery = true)
+    List<Object[]> findFinishedNChallenge(LocalDateTime endDate);
 }

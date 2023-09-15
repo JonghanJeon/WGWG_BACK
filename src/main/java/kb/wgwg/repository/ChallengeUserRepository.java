@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Long> {
     @Modifying
     @Query(value = "UPDATE CHALLENGE_USER cu " +
@@ -22,4 +24,18 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
     @Modifying
     @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 2 WHERE USER_ID = ?1 AND CHALLENGE_ID = ?2", nativeQuery = true)
     void updateIsSuccess(Long userSeq, Long challengeId);
+
+    @Modifying
+    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 0 WHERE IS_SUCCESS = 1 AND CHALLENGE_TYPE = 'COFFEE' AND  CHALLENGE_ID IN (SELECT c.CHALLENGE_ID FROM CHALLENGE c WHERE c.STATUS = '진행')", nativeQuery = true)
+    void updateChallengeUserStateOfSuccessToFail();
+
+    @Modifying
+    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 1 WHERE IS_SUCCESS = 2 AND CHALLENGE_TYPE = 'COFFEE' AND  CHALLENGE_ID IN (SELECT c.CHALLENGE_ID FROM CHALLENGE c WHERE c.STATUS = '진행')", nativeQuery = true)
+    void updateChallengeUserStateOfSuccessToNotyet();
+
+    @Query(value = "SELECT USER_ID FROM CHALLENGE_USER cu WHERE IS_SUCCESS = 2 AND CHALLENGE_ID = ?1", nativeQuery = true)
+    List<Long> findCoffeeChallengeUsersByChallengeId(Long challengeId);
+
+    @Query(value = "SELECT USER_ID FROM CHALLENGE_USER cu WHERE IS_SUCCESS = 1 AND CHALLENGE_ID = ?1", nativeQuery = true)
+    List<Long> findNChallengeUsersByChallengeId(Long challengeId);
 }
