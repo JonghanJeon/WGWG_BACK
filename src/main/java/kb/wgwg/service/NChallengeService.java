@@ -165,6 +165,7 @@ public class NChallengeService {
                 .challengeType(nchallenge.getChallengeType())
                 .status(nchallenge.getStatus())
                 .isSuccessList(isSuccessList)
+                .reward(nchallenge.getReward())
                 .build();
     }
 }
