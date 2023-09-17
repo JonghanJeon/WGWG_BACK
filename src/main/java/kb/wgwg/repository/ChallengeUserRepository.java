@@ -1,9 +1,15 @@
 package kb.wgwg.repository;
 
 import kb.wgwg.domain.ChallengeUser;
+import kb.wgwg.domain.User;
+import kb.wgwg.dto.ChallengeUserDTO;
+import kb.wgwg.dto.ChallengeUserDTO.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -39,4 +45,6 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
     @Query(value = "SELECT USER_ID FROM CHALLENGE_USER cu WHERE IS_SUCCESS = 1 AND CHALLENGE_ID = ?1", nativeQuery = true)
     List<Long> findNChallengeUsersByChallengeId(Long challengeId);
 
+    @Query(value = "SELECT CU.IS_SUCCESS as isSuccess, U.NICK_NAME as nickName FROM CHALLENGE_USER CU INNER JOIN USER_ENTITY U ON CU.USER_ID = U.USER_SEQ WHERE CU.CHALLENGE_ID = ?1", nativeQuery = true)
+    Page<ReadChallengeUserResponseDTO> findAllByChallenge(Long challengeId, Pageable pageable);
 }
