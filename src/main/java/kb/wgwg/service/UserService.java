@@ -62,6 +62,14 @@ public class UserService {
     }
 
     public UserReadResponseDTO insertUser(UserInsertRequestDTO dto) {
+        if (checkEmailDup(dto.getEmail())) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        }
+
+        if (checkNickNameDup(dto.getNickName())) {
+            throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+        }
+
         User user = modelMapper.map(dto, User.class);
         User savedUser = userRepository.save(user);
         entityManager.flush(); //insertDate

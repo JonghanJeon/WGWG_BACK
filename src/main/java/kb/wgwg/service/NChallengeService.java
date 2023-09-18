@@ -42,7 +42,7 @@ public class NChallengeService {
                 .description(dto.getDescription())
                 .status(dto.getStatus())
                 .startDate(dto.getStartDate())
-                .endDate(dto.getStartDate().plusDays(7))
+                .endDate(dto.getStartDate().plusDays(6))
                 .deposit(dto.getDeposit())
                 .limitAmount(dto.getLimitAmount())
                 .account(dto.getAccount())
