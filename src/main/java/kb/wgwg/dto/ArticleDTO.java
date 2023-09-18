@@ -58,6 +58,8 @@ public class ArticleDTO {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class ArticleReadResponseDTO {
 
+        private Long articleSeq;
+
         private String title;
 
         private String content;
@@ -66,20 +68,21 @@ public class ArticleDTO {
 
         private LocalDateTime insertDate;
 
-        private LocalDateTime updateDate;
+        private String updateDate;
 
         private String writer;
 
         @Builder
-        public ArticleReadResponseDTO(String title, String content, String category,
-                                      LocalDateTime insertDate, LocalDateTime updateDate, User writer)
+        public ArticleReadResponseDTO(Long articleSeq, String title, String content, String category,
+                                      LocalDateTime insertDate, String updateDate, String writer)
         {
+            this.articleSeq = articleSeq;
             this.title = title;
             this.content = content;
             this.category = category;
             this.insertDate = insertDate;
             this.updateDate = updateDate;
-            this.writer = writer.getNickName();
+            this.writer = writer;
         }
     }
 

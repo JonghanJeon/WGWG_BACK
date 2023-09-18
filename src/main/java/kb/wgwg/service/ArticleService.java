@@ -8,12 +8,14 @@ import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.time.format.DateTimeFormatter;
 import java.util.function.Function;
 
 @Service
@@ -65,7 +67,15 @@ public class ArticleService {
                 () -> new EntityNotFoundException("해당 게시글을 찾을 수 없습니다.")
         );
 
-        return modelMapper.map(theArticle, ArticleReadResponseDTO.class);
+        return ArticleReadResponseDTO.builder()
+                                        .articleSeq(theArticle.getArticleSeq())
+                                        .title(theArticle.getTitle())
+                                        .content(theArticle.getContent())
+                                        .category(theArticle.getCategory())
+                                        .insertDate(theArticle.getInsertDate())
+                                        .updateDate(theArticle.getUpdateDate().format(DateTimeFormatter.ISO_DATE))
+                                        .writer(theArticle.getWriter().getNickName())
+                                    .build();
     }
 
     @Transactional(readOnly = true)

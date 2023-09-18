@@ -8,7 +8,9 @@ import kb.wgwg.dto.BaseResponseDTO;
 import kb.wgwg.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -102,6 +104,7 @@ public class ArticleController {
         BaseResponseDTO<Page<ArticleListResponseDTO>> response = new BaseResponseDTO<>();
 
         try {
+            pageable = PageRequest.of(pageable.getPageNumber(), 10, Sort.by("updateDate").descending().and(Sort.by("title")));
             Page<ArticleListResponseDTO> result = service.findArticlesByCategory(dto.getCategory(), pageable);
             response.setMessage("성공적으로 게시글을 불러왔습니다.");
             response.setStatus(200);
