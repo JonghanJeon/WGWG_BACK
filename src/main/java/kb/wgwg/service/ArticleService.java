@@ -80,7 +80,13 @@ public class ArticleService {
 
     @Transactional(readOnly = true)
     public Page<ArticleListResponseDTO> findArticlesByCategory(String category, Pageable pageable) {
-        Page<Article> page = repository.findAllByCategory(category, pageable);
+        Page<Article> page = null;
+
+        if (category.equals("전체보기")) {
+            page = repository.findAll(pageable);
+        } else {
+            page = repository.findAllByCategory(category, pageable);
+        }
         Page<ArticleListResponseDTO> dtoPage = page.map(new Function<Article, ArticleListResponseDTO>() {
             @Override
             public ArticleListResponseDTO apply(Article article) {
@@ -95,7 +101,6 @@ public class ArticleService {
                 return dto;
             }
         });
-
         return dtoPage;
     }
 
