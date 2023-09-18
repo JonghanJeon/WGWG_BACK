@@ -35,5 +35,6 @@ public class ChallengeUserDTO {
     @Builder
     public static final class CheckChallengeUserResponseDTO{
         private String participantType;
+        private String challengeType;
     }
 }

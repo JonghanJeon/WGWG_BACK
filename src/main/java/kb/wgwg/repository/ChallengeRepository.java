@@ -62,4 +62,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 
     @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행\'", nativeQuery = true)
     List<Object[]> findOngoingNChallenge();
+
+    @Query(value = "select challenge_type from challenge where challenge_id = ?1", nativeQuery = true)
+    String findChallengeTypeByChallengeId(Long challengeId);
 }
