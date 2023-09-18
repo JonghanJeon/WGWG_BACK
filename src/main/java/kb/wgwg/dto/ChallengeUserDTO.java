@@ -17,4 +17,23 @@ public class ChallengeUserDTO {
         Integer getIsSuccess();
         String getNickName();
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class CheckChallengeUserRequestDTO{
+        private Long challengeId;
+        private Long userSeq;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class CheckChallengeUserResponseDTO{
+        private String participantType;
+    }
 }
