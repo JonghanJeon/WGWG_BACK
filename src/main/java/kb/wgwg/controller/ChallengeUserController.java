@@ -61,4 +61,23 @@ public class ChallengeUserController {
         }
 
     }
+
+    @PostMapping("/cnt")
+    public ResponseEntity<BaseResponseDTO> countUser(@RequestBody ReadChallengeUserRequestDTO dto){
+        BaseResponseDTO<challengeUserCntResponse> response = new BaseResponseDTO<>();
+        try {
+            challengeUserCntResponse result = challengeUserService.countUser(dto);
+            response.setMessage("참여자수 카운트 성공.");
+            response.setStatus(StatusCode.OK);
+            response.setSuccess(true);
+            response.setData(result);
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setMessage(e.getMessage());
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setSuccess(false);
+            return ResponseEntity.internalServerError().body(response);
+        }
+    }
 }

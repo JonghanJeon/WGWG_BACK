@@ -3,6 +3,7 @@ package kb.wgwg.repository;
 import kb.wgwg.domain.ChallengeUser;
 import kb.wgwg.domain.User;
 import kb.wgwg.dto.ChallengeUserDTO;
+import kb.wgwg.dto.ChallengeDTO.*;
 import kb.wgwg.dto.ChallengeUserDTO.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,4 +54,10 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
 
     @Query(value = "select user_id from challenge_user where challenge_id = ?1", nativeQuery = true)
     List<Long> findParticipantIdByChallengeId(Long challengeId);
+
+    @Query(value = "select count(*) from challenge_user where challenge_id = ?1", nativeQuery = true)
+    Integer allParticipantCnt(Long challengeId);
+
+    @Query(value = "select count(is_success) from challenge_user where is_success in (1, 2) and challenge_id = ?1", nativeQuery = true)
+    Integer survivorCnt(Long challengeId);
 }

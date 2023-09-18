@@ -2,6 +2,8 @@ package kb.wgwg.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 public class ChallengeUserDTO {
 
     @Getter
@@ -35,5 +37,18 @@ public class ChallengeUserDTO {
     @Builder
     public static final class CheckChallengeUserResponseDTO{
         private String participantType;
+        private String challengeType;
+    }
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @Builder
+    public static final class challengeUserCntResponse{
+        private int allParticipantCnt;
+        private int survivorCnt;
+        private int failureCnt;
     }
 }
