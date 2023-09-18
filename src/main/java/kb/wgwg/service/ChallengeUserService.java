@@ -26,4 +26,27 @@ public class ChallengeUserService {
         System.out.println(page);
         return page;
     }
+
+    public CheckChallengeUserResponseDTO checkChallengeUser(CheckChallengeUserRequestDTO dto){
+        Long ownerId = challengeUserRep.findOwnerIdByChallengeId(dto.getChallengeId());
+        if(ownerId == dto.getUserSeq()){
+            CheckChallengeUserResponseDTO result = CheckChallengeUserResponseDTO.builder()
+                    .participantType("개설자")
+                    .build();
+            return result;
+        }
+        List<Long> list = challengeUserRep.findParticipantIdByChallengeId(dto.getChallengeId());
+        for(Long seq : list){
+            if(seq == dto.getUserSeq()){
+                CheckChallengeUserResponseDTO result = CheckChallengeUserResponseDTO.builder()
+                        .participantType("참여자")
+                        .build();
+                return result;
+            }
+        }
+        CheckChallengeUserResponseDTO result = CheckChallengeUserResponseDTO.builder()
+                .participantType("비참여자")
+                .build();
+        return result;
+    }
 }

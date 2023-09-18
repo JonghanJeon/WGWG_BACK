@@ -28,7 +28,7 @@ public class ChallengeUserController {
         BaseResponseDTO<Page<ReadChallengeUserResponseDTO>> response = new BaseResponseDTO<>();
         try{
             Page<ReadChallengeUserResponseDTO> result = challengeUserService.readChallengeUserByChallengeId(dto, pageable);
-            response.setMessage("읽어오기 성공했습니다.");
+            response.setMessage("참가자 정보 읽기 완료.");
             response.setStatus(StatusCode.OK);
             response.setSuccess(true);
             response.setData(result);
@@ -40,5 +40,25 @@ public class ChallengeUserController {
             response.setSuccess(false);
             return ResponseEntity.internalServerError().body(response);
         }
+    }
+
+    @PostMapping("/checkuser")
+    public ResponseEntity<BaseResponseDTO> checkChallengeUser(@RequestBody CheckChallengeUserRequestDTO dto){
+        BaseResponseDTO<CheckChallengeUserResponseDTO> response = new BaseResponseDTO<>();
+        try {
+            CheckChallengeUserResponseDTO result = challengeUserService.checkChallengeUser(dto);
+            response.setMessage("유저 식별 완료.");
+            response.setStatus(StatusCode.OK);
+            response.setSuccess(true);
+            response.setData(result);
+            return ResponseEntity.ok(response);
+        }catch (Exception e){
+            e.printStackTrace();
+            response.setMessage(e.getMessage());
+            response.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            response.setSuccess(false);
+            return ResponseEntity.internalServerError().body(response);
+        }
+
     }
 }

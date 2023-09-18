@@ -47,4 +47,10 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
 
     @Query(value = "SELECT CU.IS_SUCCESS as isSuccess, U.NICK_NAME as nickName FROM CHALLENGE_USER CU INNER JOIN USER_ENTITY U ON CU.USER_ID = U.USER_SEQ WHERE CU.CHALLENGE_ID = ?1", nativeQuery = true)
     Page<ReadChallengeUserResponseDTO> findAllByChallenge(Long challengeId, Pageable pageable);
+
+    @Query(value = "select ownerId from Challenge where challengeId = ?1")
+    Long findOwnerIdByChallengeId(Long challengeId);
+
+    @Query(value = "select user_id from challenge_user where challenge_id = ?1", nativeQuery = true)
+    List<Long> findParticipantIdByChallengeId(Long challengeId);
 }
