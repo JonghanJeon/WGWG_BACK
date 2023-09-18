@@ -1,8 +1,9 @@
 package kb.wgwg.service;
 
-import kb.wgwg.domain.Challenge;
+import kb.wgwg.domain.Challenge.*;
 import kb.wgwg.domain.ChallengeUser;
 import kb.wgwg.domain.User;
+import kb.wgwg.dto.ChallengeDTO;
 import kb.wgwg.dto.ChallengeUserDTO;
 import kb.wgwg.dto.ChallengeUserDTO.*;
 import kb.wgwg.repository.ChallengeRepository;
@@ -54,5 +55,16 @@ public class ChallengeUserService {
                 .participantType("비참여자")
                 .build();
         return result;
+    }
+
+    public challengeUserCntResponse countUser(ReadChallengeUserRequestDTO dto){
+        int allParticipantCnt = challengeUserRep.allParticipantCnt(dto.getChallengeId());
+        int survivorCnt = challengeUserRep.survivorCnt(dto.getChallengeId());
+        challengeUserCntResponse response = challengeUserCntResponse.builder()
+                .allParticipantCnt(allParticipantCnt)
+                .survivorCnt(survivorCnt)
+                .failureCnt(allParticipantCnt - survivorCnt)
+                .build();
+        return response;
     }
 }
