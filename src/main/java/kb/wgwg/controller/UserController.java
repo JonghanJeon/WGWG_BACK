@@ -99,12 +99,6 @@ public class UserController {
             result.setData(insertResult);
 
             return ResponseEntity.ok(result);
-        } catch (IllegalArgumentException e){
-            result.setMessage(e.getMessage());
-            result.setSuccess(false);
-            result.setStatus(400);
-
-            return ResponseEntity.badRequest().body(result);
         } catch (Exception e){
             result.setMessage(e.getMessage());
             result.setSuccess(false);
