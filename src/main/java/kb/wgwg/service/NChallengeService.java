@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -36,11 +37,26 @@ public class NChallengeService {
                 () -> new EntityNotFoundException("해당 사용자를 찾을 수 없습니다.")
         );
 
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime endDate = dto.getStartDate().plusDays(6);
+
+        String status;
+
+        // 현재 날짜와 startDate, endDate 비교하여 상태 설정
+        if (currentDate.isBefore(dto.getStartDate())) {
+            status = "모집중";
+        } else if (currentDate.isEqual(dto.getStartDate()) ||
+                (currentDate.isAfter(dto.getStartDate()) && currentDate.isBefore(endDate))) {
+            status = "진행중";
+        } else {
+            status = "종료";
+        }
+
         NChallengeInsertEndDateRequestDTO finalDto = NChallengeInsertEndDateRequestDTO.builder()
                 .ownerId(dto.getOwnerId())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
-                .status(dto.getStatus())
+                .status(status)
                 .startDate(dto.getStartDate())
                 .endDate(dto.getStartDate().plusDays(6))
                 .deposit(dto.getDeposit())
