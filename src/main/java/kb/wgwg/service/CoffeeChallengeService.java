@@ -50,6 +50,7 @@ public class CoffeeChallengeService {
         ChallengeUser theParticipant = ChallengeUser.builder()
                 .isSuccess(1)
                 .account(dto.getAccount())
+                .bankName(dto.getBankName())
                 .challengeType(dto.getChallengeType())
                 .build();
 
@@ -84,6 +85,7 @@ public class CoffeeChallengeService {
         ChallengeUser theParticipant = ChallengeUser.builder()
                 .isSuccess(1)
                 .account(dto.getAccount())
+                .bankName(dto.getBankName())
                 .challengeType(dto.getChallengeType())
                 .build();
 

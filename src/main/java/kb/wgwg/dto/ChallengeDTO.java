@@ -28,6 +28,10 @@ public class ChallengeDTO {
 
         private String challengeType;
 
+        private String account;
+
+        private String bankName;
+
         @Builder
         public NChallengeInsertRequestDTO(String title, String description, String status,
                                           LocalDateTime startDate, int deposit,
@@ -64,14 +68,12 @@ public class ChallengeDTO {
 
         private int limitAmount;
 
-        private String account;
-
         private String challengeType;
 
         @Builder
         public NChallengeInsertEndDateRequestDTO(Long ownerId, String title, String description, String status,
                                           LocalDateTime startDate, LocalDateTime endDate, int deposit,
-                                          int limitAmount, String account, String challengeType)
+                                          int limitAmount, String challengeType)
         {
             this.ownerId = ownerId;
             this.title = title;
@@ -81,7 +83,6 @@ public class ChallengeDTO {
             this.endDate = endDate;
             this.deposit = deposit;
             this.limitAmount = limitAmount;
-            this.account = account;
             this.challengeType = challengeType;
         }
     }
@@ -144,6 +145,8 @@ public class ChallengeDTO {
 
         private String account;
 
+        private String bankName;
+
         private int savingAmount;
 
         private String challengeType;
@@ -151,7 +154,7 @@ public class ChallengeDTO {
         @Builder
         public CoffeeChallengeInsertRequestDTO(String title, String description, String status,
                                           LocalDateTime startDate, LocalDateTime endDate, int savingAmount,
-                                          String account, String challengeType)
+                                          String account, String bankName, String challengeType)
         {
             this.title = title;
             this.description = description;
@@ -160,6 +163,7 @@ public class ChallengeDTO {
             this.endDate = endDate;
             this.savingAmount = savingAmount;
             this.account = account;
+            this.bankName = bankName;
             this.challengeType = challengeType;
         }
     }
@@ -210,6 +214,8 @@ public class ChallengeDTO {
         private Long userSeq;
 
         private String account;
+
+        private String bankName;
 
         private String challengeType;
     }

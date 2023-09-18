@@ -68,6 +68,8 @@ public class NChallengeService {
 
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(1)
+                                                    .account(dto.getAccount())
+                                                    .bankName(dto.getBankName())
                                                     .challengeType(dto.getChallengeType())
                                                     .build();
 
@@ -106,6 +108,7 @@ public class NChallengeService {
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(1) // 생존
                                                     .account(dto.getAccount())
+                                                    .bankName(dto.getBankName())
                                                     .challengeType(dto.getChallengeType())
                                                     .build();
 

@@ -79,4 +79,5 @@ public class Article {
     public void updateCategory(String category) {
         this.category = category;
     }
+
 }

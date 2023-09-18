@@ -34,6 +34,9 @@ public class ChallengeUser {
     @Column(nullable = false)
     private String account;
 
+    @Column(nullable = false)
+    private String bankName;
+
     // Coffee Challenge
     // 탈락 0
     // 입금전 1
@@ -54,8 +57,9 @@ public class ChallengeUser {
     }
 
     @Builder
-    public ChallengeUser(String account, int isSuccess, String challengeType) {
+    public ChallengeUser(String account, String bankName, int isSuccess, String challengeType) {
         this.account = account;
+        this.bankName = bankName;
         this.isSuccess = isSuccess;
         this.challengeType = challengeType;
     }
