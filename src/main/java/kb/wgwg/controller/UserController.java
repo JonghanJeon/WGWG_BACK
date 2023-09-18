@@ -8,13 +8,17 @@ import kb.wgwg.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
@@ -44,20 +48,24 @@ public class UserController {
         return ResponseEntity.ok(result2);
     }
 
-
     @GetMapping("/{email}/check/email")
-    public ResponseEntity<BaseResponseDTO> checkEmailDup(@PathVariable String email){
+    public ResponseEntity<BaseResponseDTO> checkEmailDup(@PathVariable @Email @NotEmpty String email){
         BaseResponseDTO result = new BaseResponseDTO<>();
+
         if(userService.checkEmailDup(email)){
             result.setStatus(404);
             result.setSuccess(false);
             result.setMessage("이메일 중복.");
-        }else{
+
+        } else{
             result.setStatus(200);
             result.setSuccess(true);
             result.setMessage("이메일 사용 가능.");
+
+            return ResponseEntity.ok(result);
         }
-        return ResponseEntity.ok(result);
+
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/{nickName}/check/nickname")
@@ -67,29 +75,37 @@ public class UserController {
             result.setStatus(404);
             result.setSuccess(false);
             result.setMessage("닉네임 중복.");
-        }else{
+
+        } else{
             result.setStatus(200);
             result.setSuccess(true);
             result.setMessage("닉네임 사용 가능.");
+
+            return ResponseEntity.ok(result);
         }
-        return ResponseEntity.ok(result);
+
+        return ResponseEntity.badRequest().body(result);
     }
 
     @PostMapping("/insert")
     public ResponseEntity<BaseResponseDTO> insert(@RequestBody UserInsertRequestDTO dto){
         BaseResponseDTO<UserReadResponseDTO> result = new BaseResponseDTO<>();
+
         try{
             UserReadResponseDTO insertResult = userService.insertUser(dto);
             result.setMessage("유저 등록 완료.");
             result.setStatus(200);
             result.setSuccess(true);
             result.setData(insertResult);
+
+            return ResponseEntity.ok(result);
         } catch (Exception e){
             result.setMessage(e.getMessage());
             result.setSuccess(false);
             result.setStatus(500);
+
+            return ResponseEntity.internalServerError().body(result);
         }
-        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping(value = "/delete/{id}")
