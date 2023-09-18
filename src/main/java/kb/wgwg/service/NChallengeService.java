@@ -61,7 +61,6 @@ public class NChallengeService {
                 .endDate(dto.getStartDate().plusDays(6))
                 .deposit(dto.getDeposit())
                 .limitAmount(dto.getLimitAmount())
-                .account(dto.getAccount())
                 .challengeType(dto.getChallengeType())
                 .build();
 
@@ -69,7 +68,6 @@ public class NChallengeService {
 
         ChallengeUser theParticipant = ChallengeUser.builder()
                                                     .isSuccess(1)
-                                                    .account(dto.getAccount())
                                                     .challengeType(dto.getChallengeType())
                                                     .build();
 

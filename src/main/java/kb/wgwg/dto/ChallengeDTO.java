@@ -26,14 +26,12 @@ public class ChallengeDTO {
 
         private int limitAmount;
 
-        private String account;
-
         private String challengeType;
 
         @Builder
         public NChallengeInsertRequestDTO(String title, String description, String status,
                                           LocalDateTime startDate, int deposit,
-                                          int limitAmount, String account, String challengeType)
+                                          int limitAmount, String challengeType)
         {
             this.title = title;
             this.description = description;
@@ -41,7 +39,6 @@ public class ChallengeDTO {
             this.startDate = startDate;
             this.deposit = deposit;
             this.limitAmount = limitAmount;
-            this.account = account;
             this.challengeType = challengeType;
         }
     }
