@@ -121,6 +121,8 @@ public class BankingDTO {
         // 카테고리
         private String category;
 
+        private String content;
+
 
     }
 

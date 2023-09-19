@@ -68,5 +68,6 @@ public class Banking {
     public void updateType(String type){ this.type = type; }
     public void updateBankingDate(LocalDateTime bankingDate){ this.bankingDate = bankingDate; }
     public void updateCategory(String category){ this.category = category; }
-
+    public void updateContent(String content) { this.content = content;
+    }
 }
