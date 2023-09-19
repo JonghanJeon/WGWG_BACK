@@ -35,6 +35,29 @@ public class BankingDTO {
         private String content;
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class BankingReadResponseDTO {
+        private Long bankingId;
+        private LocalDateTime bankingDate;
+        private String type;
+        private String category;
+        private int amount;
+        private String content;
+
+        @Builder
+        public BankingReadResponseDTO(Long bankingId, LocalDateTime bankingDate, String type, String category, int amount, String content)
+        {
+            this.bankingId =bankingId;
+            this.bankingDate = bankingDate;
+            this.type = type;
+            this.category = category;
+            this.amount = amount;
+            this.content = content;
+        }
+    }
+
 
     @Getter
     @Setter
