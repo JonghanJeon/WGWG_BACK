@@ -40,6 +40,8 @@ public class BankingService {
         banking.updateBankingDate(dto.getBankingDate());
         banking.updateType(dto.getType());
         banking.updateCategory(dto.getCategory());
+        banking.updateContent(dto.getContent());
+
 
         BankingUpdateDTO result = modelMapper.map(banking, BankingUpdateDTO.class);
 
