@@ -111,6 +111,7 @@ public class ArticleService {
             @Override
             public ArticleListUserResponseDTO apply(Article article) {
                 ArticleListUserResponseDTO dto = ArticleListUserResponseDTO.builder()
+                        .articleSeq(article.getArticleSeq())
                         .insertDate(article.getInsertDate())
                         .title(article.getTitle())
                         .category(article.getCategory())

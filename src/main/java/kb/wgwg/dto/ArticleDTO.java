@@ -132,12 +132,14 @@ public class ArticleDTO {
     @Setter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class ArticleListUserResponseDTO {
+        private Long articleSeq;
         private LocalDateTime insertDate;
         private String title;
         private String category;
 
         @Builder
-        public ArticleListUserResponseDTO(LocalDateTime insertDate, String title, String category) {
+        public ArticleListUserResponseDTO(Long articleSeq, LocalDateTime insertDate, String title, String category) {
+            this.articleSeq = articleSeq;
             this.insertDate = insertDate;
             this.title = title;
             this.category = category;
