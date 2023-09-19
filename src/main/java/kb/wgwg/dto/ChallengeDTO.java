@@ -152,10 +152,11 @@ public class ChallengeDTO {
         private String challengeType;
 
         @Builder
-        public CoffeeChallengeInsertRequestDTO(String title, String description, String status,
+        public CoffeeChallengeInsertRequestDTO(Long ownerId, String title, String description, String status,
                                           LocalDateTime startDate, LocalDateTime endDate, int savingAmount,
                                           String account, String bankName, String challengeType)
         {
+            this.ownerId = ownerId;
             this.title = title;
             this.description = description;
             this.status = status;
