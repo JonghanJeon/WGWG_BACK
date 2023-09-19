@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -45,7 +46,32 @@ public class CoffeeChallengeService {
                 () -> new EntityNotFoundException("해당 사용자를 찾을 수 없습니다.")
         );
 
-        CoffeeChallenge theChallenge = challengeRepository.save(modelMapper.map(dto, CoffeeChallenge.class));
+        LocalDateTime currentDate = LocalDateTime.now();
+
+        String status;
+
+        // 현재 날짜와 startDate, endDate 비교하여 상태 설정
+        if (currentDate.isBefore(dto.getStartDate())) {
+            status = "모집중";
+        } else if (currentDate.isEqual(dto.getStartDate()) ||
+                (currentDate.isAfter(dto.getStartDate()) && currentDate.isBefore(dto.getEndDate()))) {
+            status = "진행중";
+        } else {
+            status = "종료";
+        }
+
+        CoffeeChallengeInsertRequestDTO finalDTO = CoffeeChallengeInsertRequestDTO.builder()
+                .ownerId(dto.getOwnerId())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .status(status)
+                .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
+                .savingAmount(dto.getSavingAmount())
+                .challengeType(dto.getChallengeType())
+                .build();
+
+        CoffeeChallenge theChallenge = challengeRepository.save(modelMapper.map(finalDTO, CoffeeChallenge.class));
 
         ChallengeUser theParticipant = ChallengeUser.builder()
                 .isSuccess(1)
