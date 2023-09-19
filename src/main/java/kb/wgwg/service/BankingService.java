@@ -46,6 +46,24 @@ public class BankingService {
         return result;
     }
 
+    @Transactional(readOnly = true)
+    public BankingReadResponseDTO findBankingById(Long id) {
+        Banking banking = bankingRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("해당 가계부 내역을 찾을 수 없습니다.")
+        );
+
+        return BankingReadResponseDTO.builder()
+                .bankingId(banking.getBankingId())
+                .type(banking.getType())
+                .bankingDate(banking.getBankingDate())
+//                .bankingDate(banking.getBankingDate().format(DateTimeFormatter.ISO_DATE))
+                .amount(banking.getAmount())
+                .category(banking.getCategory())
+                .content(banking.getContent())
+                .build();
+    }
+
+
     public Page<BankingListResponseDTO> findBankingByYearAndMonth(int year, int month, Long userSeq,Pageable pageable) {
         Page<Banking> page = bankingRepository.findMonth(year, month, userSeq, pageable);
 
