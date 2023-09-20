@@ -36,7 +36,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     void updateChallengeStateToFinish();
 
     @Modifying
-    @Query(value = "UPDATE Challenge c SET status = '진행' WHERE TRUNC(START_DATE) = TRUNC(sysdate)", nativeQuery = true)
+    @Query(value = "UPDATE Challenge c SET status = '진행중' WHERE TRUNC(START_DATE) = TRUNC(sysdate)", nativeQuery = true)
     void updateChallengeStateToOngoing();
 
     @Modifying
@@ -54,13 +54,13 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_ASSET FROM COFFEE_CHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE TRUNC(c.END_DATE) = TRUNC(?1)", nativeQuery = true)
     List<Object[]> findFinishedCoffeeChallenge(LocalDateTime endDate);
 
-    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_ASSET FROM COFFEE_CHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행\'", nativeQuery = true)
+    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_ASSET FROM COFFEE_CHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행중\'", nativeQuery = true)
     List<Object[]> findOngoingCoffeeChallenge();
 
     @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE TRUNC(c.END_DATE) = TRUNC(?1)", nativeQuery = true)
     List<Object[]> findFinishedNChallenge(LocalDateTime endDate);
 
-    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행\'", nativeQuery = true)
+    @Query(value = "SELECT c.CHALLENGE_ID as CHALLENGE_ID, TOTAL_DEPOSIT FROM NCHALLENGE cc JOIN CHALLENGE c ON cc.CHALLENGE_ID = c.CHALLENGE_ID WHERE c.STATUS = \'진행중\'", nativeQuery = true)
     List<Object[]> findOngoingNChallenge();
 
     @Query(value = "select challenge_type from challenge where challenge_id = ?1", nativeQuery = true)
