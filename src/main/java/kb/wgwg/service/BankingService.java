@@ -60,7 +60,6 @@ public class BankingService {
                 .bankingId(banking.getBankingId())
                 .type(banking.getType())
                 .bankingDate(banking.getBankingDate())
-//                .bankingDate(banking.getBankingDate().format(DateTimeFormatter.ISO_DATE))
                 .amount(banking.getAmount())
                 .category(banking.getCategory())
                 .content(banking.getContent())
@@ -114,24 +113,6 @@ public class BankingService {
         }
         return result;
     }
-
-//    public int sumTotalSpend(ReadTotalSpendDTO dto) {
-//        User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
-//                () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
-//        );
-//
-//        String checkMonth = dto.getCheckMonth().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
-//        String startDate = checkMonth + "-01";
-//        String endDate = checkMonth + "-31";
-//        System.out.println("CheckMonth is " + checkMonth);
-//        System.out.println("startDate is " + startDate);
-//        System.out.println("endDate is " + endDate);
-//
-//
-//        int totalSpend = bankingRepository.sumTotalSpend(dto.getUserSeq(), startDate, endDate);
-//        System.out.println("totalSpend is "+totalSpend);
-//        return totalSpend;
-//    }
 
     public ReadTotalResponseDTO calculateTotalSpend(ReadTotalRequestDTO dto) {
         User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
