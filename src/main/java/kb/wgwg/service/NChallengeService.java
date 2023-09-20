@@ -38,7 +38,7 @@ public class NChallengeService {
         );
 
         LocalDateTime currentDate = LocalDateTime.now();
-        LocalDateTime endDate = dto.getStartDate().plusDays(6);
+        LocalDateTime endDate = dto.getStartDate().plusDays(7);
 
         String status;
 
@@ -58,7 +58,7 @@ public class NChallengeService {
                 .description(dto.getDescription())
                 .status(status)
                 .startDate(dto.getStartDate())
-                .endDate(dto.getStartDate().plusDays(6))
+                .endDate(endDate)
                 .deposit(dto.getDeposit())
                 .limitAmount(dto.getLimitAmount())
                 .challengeType(dto.getChallengeType())

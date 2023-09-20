@@ -8,12 +8,14 @@ import kb.wgwg.dto.ChallengeUserDTO;
 import kb.wgwg.dto.ChallengeUserDTO.*;
 import kb.wgwg.repository.ChallengeRepository;
 import kb.wgwg.repository.ChallengeUserRepository;
+import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.function.Function;
 
@@ -24,6 +26,7 @@ public class ChallengeUserService {
 
     private final ChallengeUserRepository challengeUserRep;
     private final ChallengeRepository challengeRep;
+    private final UserRepository userRepository;
 
     public Page<ReadChallengeUserResponseDTO> readChallengeUserByChallengeId(ReadChallengeUserRequestDTO dto, Pageable pageable){
         Page<ReadChallengeUserResponseDTO> page = challengeUserRep.findAllByChallenge(dto.getChallengeId(), pageable);
@@ -66,5 +69,21 @@ public class ChallengeUserService {
                 .failureCnt(allParticipantCnt - survivorCnt)
                 .build();
         return response;
+    }
+
+    public ChallengeSuccessRateResponseDTO readSuccessChallengeRate(ChallengeSuccessRateRequestDTO dto) {
+        User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
+
+        int allChallengeCount = challengeUserRep.countByParticipantAndChallenge_Status(theUser, "종료");
+        int successChallengeCount = challengeUserRep.countByParticipantAndIsSuccessNotAndChallenge_Status(theUser, 0, "종료");
+        int failedChallengeCount = allChallengeCount - successChallengeCount;
+
+        return ChallengeSuccessRateResponseDTO.builder()
+                                                .allChallengeCount(allChallengeCount)
+                                                .successChallengeCount(successChallengeCount)
+                                                .failedChallengeCount(failedChallengeCount)
+                                                .build();
     }
 }

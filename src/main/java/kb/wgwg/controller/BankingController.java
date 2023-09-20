@@ -189,4 +189,28 @@ public class BankingController {
             return ResponseEntity.internalServerError().body(result);
         }
     }
+
+    @PostMapping(value = "/read/reward")
+    public ResponseEntity<BaseResponseDTO> readTotalReward(@RequestBody GetTotalRewardRequestDTO dto) {
+        BaseResponseDTO<Integer> result = new BaseResponseDTO<>();
+
+        try {
+            int totalReward = bankingService.calculateReward(dto);
+            result.setMessage(ResponseMessage.READ_TOTAL_SUCCESS);
+            result.setStatus(StatusCode.OK);
+            result.setSuccess(true);
+            result.setData(totalReward);
+            return ResponseEntity.ok(result);
+        } catch (EntityNotFoundException e) {
+            result.setMessage(e.getMessage());
+            result.setStatus(StatusCode.NOT_FOUND);
+            result.setSuccess(false);
+            return ResponseEntity.badRequest().body(result);
+        } catch (RuntimeException e) {
+            result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+            result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
+            result.setSuccess(false);
+            return ResponseEntity.internalServerError().body(result);
+        }
+    }
 }

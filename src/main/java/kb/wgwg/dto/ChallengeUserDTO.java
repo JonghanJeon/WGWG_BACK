@@ -51,4 +51,34 @@ public class ChallengeUserDTO {
         private int survivorCnt;
         private int failureCnt;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ChallengeSuccessRateRequestDTO {
+        private Long userSeq;
+
+        @Builder
+        public ChallengeSuccessRateRequestDTO(Long userSeq) {
+            this.userSeq = userSeq;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static final class ChallengeSuccessRateResponseDTO {
+        private int allChallengeCount;
+
+        private int successChallengeCount;
+
+        private int failedChallengeCount;
+
+        @Builder
+        public ChallengeSuccessRateResponseDTO(int allChallengeCount, int successChallengeCount, int failedChallengeCount) {
+            this.allChallengeCount = allChallengeCount;
+            this.successChallengeCount = successChallengeCount;
+            this.failedChallengeCount = failedChallengeCount;
+        }
+    }
 }

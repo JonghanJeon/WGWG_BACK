@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -162,5 +163,22 @@ public class BankingService {
 
         Banking saved = bankingRepository.save(banking);
         return saved.getBankingId();
+    }
+
+    public int calculateReward(GetTotalRewardRequestDTO dto) {
+        List<String> types = Arrays.asList("보증금", "적금액");
+        User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
+
+        List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
+        List<Banking> outputBankingList = bankingRepository.
+                findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
+
+        int totalAmount = inputBankingList.stream().mapToInt(Banking::getAmount).sum();
+        System.out.println("***" + totalAmount);
+        int outputAmount = outputBankingList.stream().mapToInt(Banking::getAmount).sum();
+        System.out.println("*****" + outputAmount);
+        return totalAmount - outputAmount;
     }
 }
