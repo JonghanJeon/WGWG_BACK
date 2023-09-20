@@ -90,14 +90,28 @@ public class BankingDTO {
     @Getter
     @Setter
     @NoArgsConstructor
-    public static final class ReadTotalSpendDTO {
+    public static final class ReadTotalRequestDTO {
         private Long userSeq;
-        private String checkMonth;
+        private LocalDateTime checkMonth;
 
         @Builder
-        public ReadTotalSpendDTO(Long userSeq, String checkMonth) {
+        public ReadTotalRequestDTO(Long userSeq, LocalDateTime checkMonth) {
             this.userSeq = userSeq;
             this.checkMonth = checkMonth;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static final class ReadTotalResponseDTO {
+        private int totalIncome;
+        private int totalExpense;
+
+        @Builder
+        public ReadTotalResponseDTO(int totalIncome, int totalExpense){
+            this.totalIncome = totalIncome;
+            this.totalExpense = totalExpense;
         }
     }
 

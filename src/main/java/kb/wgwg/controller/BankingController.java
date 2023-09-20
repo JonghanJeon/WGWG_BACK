@@ -168,14 +168,14 @@ public class BankingController {
     }
 
     @PostMapping(value = "/read/total")
-    public ResponseEntity<BaseResponseDTO> readCategoryProportion(@RequestBody ReadTotalSpendDTO requestDTO) {
-        BaseResponseDTO<Integer> result = new BaseResponseDTO<>();
+    public ResponseEntity<BaseResponseDTO> readCategoryProportion(@RequestBody ReadTotalRequestDTO requestDTO) {
+        BaseResponseDTO<ReadTotalResponseDTO> result = new BaseResponseDTO<>();
         try {
-            int totalSpend = bankingService.sumTotalSpend(requestDTO);
+            ReadTotalResponseDTO totalResponseDTO = bankingService.calculateTotalSpend(requestDTO);
             result.setMessage(ResponseMessage.READ_TOTAL_SUCCESS);
             result.setStatus(StatusCode.OK);
             result.setSuccess(true);
-            result.setData(totalSpend);
+            result.setData(totalResponseDTO);
             return ResponseEntity.ok(result);
         } catch (EntityNotFoundException e) {
             result.setMessage(e.getMessage());

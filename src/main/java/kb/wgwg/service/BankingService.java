@@ -15,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,13 +115,52 @@ public class BankingService {
         return result;
     }
 
-    public int sumTotalSpend(ReadTotalSpendDTO dto) {
+//    public int sumTotalSpend(ReadTotalSpendDTO dto) {
+//        User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
+//                () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
+//        );
+//
+//        String checkMonth = dto.getCheckMonth().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM"));
+//        String startDate = checkMonth + "-01";
+//        String endDate = checkMonth + "-31";
+//        System.out.println("CheckMonth is " + checkMonth);
+//        System.out.println("startDate is " + startDate);
+//        System.out.println("endDate is " + endDate);
+//
+//
+//        int totalSpend = bankingRepository.sumTotalSpend(dto.getUserSeq(), startDate, endDate);
+//        System.out.println("totalSpend is "+totalSpend);
+//        return totalSpend;
+//    }
+
+    public ReadTotalResponseDTO calculateTotalSpend(ReadTotalRequestDTO dto) {
         User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
                 () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
         );
 
-        int totalSpend = bankingRepository.sumTotalSpend(dto.getUserSeq(), dto.getCheckMonth()+"-01");
-        return totalSpend;
+        YearMonth yearMonth = YearMonth.from(dto.getCheckMonth()); // 해당 월을 추출
+        String startDate = String.valueOf(yearMonth.atDay(1).atStartOfDay().toLocalDate()); // 해당 월의 시작일 (1일)
+        String endDate = String.valueOf(yearMonth.atEndOfMonth());
+
+        // 데이터베이스에서 해당 월의 소비 내역을 조회
+        List<Banking> bankingList = bankingRepository.findByBankingDateBetweenAndUserSeq(startDate, endDate, dto.getUserSeq());
+        System.out.println(bankingList);
+
+        // 수입과 지출을 각각 계산
+        int totalIncome = 0;
+        int totalExpense = 0;
+
+        for (Banking banking : bankingList) {
+            if ("수입".equals(banking.getType())) {
+                totalIncome += banking.getAmount();
+            } else if ("지출".equals(banking.getType())) {
+                totalExpense += banking.getAmount();
+            }
+        }
+        ReadTotalResponseDTO responseDTO = new ReadTotalResponseDTO();
+        responseDTO.setTotalIncome(totalIncome);
+        responseDTO.setTotalExpense(totalExpense);
+        return responseDTO;
     }
 
     public Long insertBankingHistory(BankingInsertRequestDTO dto){
