@@ -139,4 +139,16 @@ public class BankingDTO {
         private String content;
         private Long challengeId;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static final class GetTotalRewardRequestDTO {
+        private Long userSeq;
+
+        @Builder
+        public GetTotalRewardRequestDTO(Long userSeq) {
+            this.userSeq = userSeq;
+        }
+    }
 }
