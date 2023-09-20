@@ -1,6 +1,7 @@
 package kb.wgwg.repository;
 
 import kb.wgwg.domain.Banking;
+import kb.wgwg.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,5 +34,9 @@ public interface BankingRepository extends JpaRepository<Banking, Long> {
             @Param("startDate") String startDate,
             @Param("endDate") String endDate,
             @Param("userSeq") Long userSeq
+
+
     );
+    List<Banking> findAllByOwnerAndTypeAndCategory(User theUser, String type, String category);
+    List<Banking> findAllByOwnerAndCategoryAndTypeIn(User theUser, String category, List<String> types);
 }

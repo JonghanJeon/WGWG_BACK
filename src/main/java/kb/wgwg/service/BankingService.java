@@ -172,8 +172,7 @@ public class BankingService {
         );
 
         List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
-        List<Banking> outputBankingList = bankingRepository.
-                findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
+        List<Banking> outputBankingList = bankingRepository.findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
 
         int totalAmount = inputBankingList.stream().mapToInt(Banking::getAmount).sum();
         System.out.println("***" + totalAmount);
