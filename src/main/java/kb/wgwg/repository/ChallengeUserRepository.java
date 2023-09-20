@@ -60,4 +60,9 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
 
     @Query(value = "select count(is_success) from challenge_user where is_success in (1, 2) and challenge_id = ?1", nativeQuery = true)
     Integer survivorCnt(Long challengeId);
+
+    // 참여했었던 모든 챌린지 불러오기
+    int countByParticipantAndChallenge_Status(User theUser, String status);
+
+    int countByParticipantAndIsSuccessNotAndChallenge_Status(User theParticipant, int isSuccess, String status);
 }
