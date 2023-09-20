@@ -31,5 +31,5 @@ public interface BankingRepository extends JpaRepository<Banking, Long> {
                       @Param("checkMonth") String checkMonth);
 
     List<Banking> findAllByOwnerAndTypeAndCategory(User theUser, String type, String category);
-    List<Banking> findAllByOwnerAndCategoryAndTypeIsOrTypeIs(User theUser, String category, String type1, String type2);
+    List<Banking> findAllByOwnerAndCategoryAndTypeIn(User theUser, String category, List<String> types);
 }
