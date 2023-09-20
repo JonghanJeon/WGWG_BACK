@@ -141,4 +141,19 @@ public class BankingService {
         Banking saved = bankingRepository.save(banking);
         return saved.getBankingId();
     }
+
+    public int calculateReward(GetTotalRewardRequestDTO dto) {
+        User theUser = userRepository.findById(dto.getUserSeq()).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
+
+        List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
+        List<Banking> outputBankingList = bankingRepository.
+                findAllByOwnerAndCategoryAndTypeIsOrTypeIs(theUser, "챌린지", "보증금", "적금액");
+
+        int totalAmount = inputBankingList.stream().mapToInt(Banking::getAmount).sum();
+        int outputAmount = outputBankingList.stream().mapToInt(Banking::getAmount).sum();
+
+        return totalAmount - outputAmount;
+    }
 }
