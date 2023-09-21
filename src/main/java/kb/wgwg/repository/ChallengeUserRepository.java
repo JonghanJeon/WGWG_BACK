@@ -21,7 +21,7 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
             "WHERE EXISTS ( " +
             "SELECT 1 " +
             " FROM (SELECT c.CHALLENGE_ID, n.LIMIT_AMOUNT FROM NCHALLENGE n JOIN CHALLENGE c ON n.CHALLENGE_ID = c.CHALLENGE_ID) ci " +
-            " JOIN (SELECT b.USER_SEQ, cu.CHALLENGE_ID, sum(b.AMOUNT) AS spending FROM BANKING b JOIN CHALLENGE_USER cu ON b.USER_SEQ = cu.USER_ID WHERE cu.CHALLENGE_TYPE = 'N' GROUP BY USER_SEQ, cu.CHALLENGE_ID) ub " +
+            " JOIN (SELECT b.USER_SEQ, cu.CHALLENGE_ID, sum(b.AMOUNT) AS spending FROM BANKING b JOIN CHALLENGE_USER cu ON b.USER_SEQ = cu.USER_ID WHERE cu.CHALLENGE_TYPE = 'N' AND b.CATEGORY NOT LIKE '%챌린지%' GROUP BY USER_SEQ, cu.CHALLENGE_ID) ub " +
             " ON ci.CHALLENGE_ID = ub.CHALLENGE_ID " +
             " WHERE ci.LIMIT_AMOUNT < ub.spending " +
             " AND cu.CHALLENGE_ID = ci.CHALLENGE_ID " +
@@ -33,11 +33,11 @@ public interface ChallengeUserRepository extends JpaRepository<ChallengeUser, Lo
     void updateIsSuccess(Long userSeq, Long challengeId);
 
     @Modifying
-    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 0 WHERE IS_SUCCESS = 1 AND CHALLENGE_TYPE = 'COFFEE' AND  CHALLENGE_ID IN (SELECT c.CHALLENGE_ID FROM CHALLENGE c WHERE c.STATUS = '진행')", nativeQuery = true)
+    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 0 WHERE IS_SUCCESS = 1 AND CHALLENGE_TYPE = 'COFFEE' AND  CHALLENGE_ID IN (SELECT c.CHALLENGE_ID FROM CHALLENGE c WHERE c.STATUS LIKE '%진행%')", nativeQuery = true)
     void updateChallengeUserStateOfSuccessToFail();
 
     @Modifying
-    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 1 WHERE IS_SUCCESS = 2 AND CHALLENGE_TYPE = 'COFFEE' AND  CHALLENGE_ID IN (SELECT c.CHALLENGE_ID FROM CHALLENGE c WHERE c.STATUS = '진행')", nativeQuery = true)
+    @Query(value = "UPDATE CHALLENGE_USER SET IS_SUCCESS = 1 WHERE IS_SUCCESS = 2 AND CHALLENGE_TYPE = 'COFFEE' AND  CHALLENGE_ID IN (SELECT c.CHALLENGE_ID FROM CHALLENGE c WHERE c.STATUS LIKE '%진행%')", nativeQuery = true)
     void updateChallengeUserStateOfSuccessToNotyet();
 
     @Query(value = "SELECT USER_ID FROM CHALLENGE_USER cu WHERE IS_SUCCESS = 2 AND CHALLENGE_ID = ?1", nativeQuery = true)

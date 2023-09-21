@@ -25,7 +25,7 @@ public class ChallengeSchedulerService {
     /**
      * 챌린지 진행 상태 업데이트
      */
-    @Scheduled(cron = "2 0 0 * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     public void updateChallengeStatus(){
         //진행 -> 종료
         challengeRepository.updateChallengeStateToFinish();
@@ -82,9 +82,9 @@ public class ChallengeSchedulerService {
     /**
      * 커피 챌린지 종료시, 챌린지 성공한 사용자에게 리워드 지급
      */
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "2 0 0 * * *")
     public void provideRewardToCoffeeChallengeSuccessUser(){
-        LocalDateTime updateDay = LocalDateTime.now().minusDays(1);
+        LocalDateTime updateDay = LocalDateTime.now();
         System.out.println(updateDay);
 
         List<Object[]> coffeeChallenges = challengeRepository.findFinishedCoffeeChallenge(updateDay);
@@ -99,9 +99,9 @@ public class ChallengeSchedulerService {
     /**
      * N 챌린지 종료시, 챌린지 성공한 사용자에게 리워드 지급
      */
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "2 0 0 * * *")
     public void provideRewardToNChallengeSuccessUser(){
-        LocalDateTime updateDay = LocalDateTime.now().minusDays(1);
+        LocalDateTime updateDay = LocalDateTime.now();
         System.out.println(updateDay);
 
         List<Object[]> NChallenges = challengeRepository.findFinishedNChallenge(updateDay);
