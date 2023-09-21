@@ -146,13 +146,14 @@ public class BankingController {
 
     @PostMapping(value = "/read/category")
     public ResponseEntity<BaseResponseDTO> readCategoryProportion(@RequestBody ReadCategoryRequestDTO requestDTO) {
-        BaseResponseDTO<List<ReadCategoryResponseDTO>> result = new BaseResponseDTO<>();
+//        BaseResponseDTO<List<ReadCategoryResponseDTO>> result = new BaseResponseDTO<>();
+        BaseResponseDTO<List<Map<String, Integer>>> result = new BaseResponseDTO<>();
         try {
-            List<ReadCategoryResponseDTO> result_li = bankingService.readCategoryProportion(requestDTO);
+            List<Map<String, Integer>> resultData = bankingService.readCategoryProportion(requestDTO);
             result.setMessage(ResponseMessage.READ_CATEGORY_SUCCESS);
             result.setStatus(StatusCode.OK);
             result.setSuccess(true);
-            result.setData(result_li);
+            result.setData(resultData);
             return ResponseEntity.ok(result);
         } catch (EntityNotFoundException e) {
             result.setMessage(e.getMessage());

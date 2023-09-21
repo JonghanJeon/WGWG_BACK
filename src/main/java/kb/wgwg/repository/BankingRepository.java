@@ -8,7 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface BankingRepository extends JpaRepository<Banking, Long> {
 
@@ -17,13 +20,30 @@ public interface BankingRepository extends JpaRepository<Banking, Long> {
 
 
     @Query(value = "SELECT category, SUM(amount) AS TOTAL " +
-            "FROM banking " +
-            "WHERE USER_SEQ = :userSeq AND BANKING_DATE BETWEEN TO_DATE(:checkMonth, 'YYYY-MM-DD') AND LAST_DAY(TO_DATE(:checkMonth, 'YYYY-MM-DD')) " +
-            "GROUP BY category " +
+            "FROM banking b " +
+            "JOIN user_entity u ON b.user_seq = u.user_seq " +
+            "WHERE u.user_seq = :userSeq " +
+            "AND b.banking_date BETWEEN TO_DATE(:startDate, 'YYYY-MM-DD') AND TO_DATE(:endDate, 'YYYY-MM-DD') " +
+            "AND b.type = '지출' "+
+            "GROUP BY b.category " +
             "ORDER BY TOTAL DESC" , nativeQuery = true)
-    List<Object[]> readCategoryProportion(
-            @Param("userSeq") Long userSeq,
-            @Param("checkMonth") String checkMonth);
+    List<Map<String, Integer>> readCategoryProportion(
+            @Param("startDate") String startDate,
+            @Param("endDate") String endDate,
+            @Param("userSeq") Long userSeq);
+
+//    @Query(value = "SELECT category, SUM(amount) AS TOTAL " +
+//            "FROM banking b " +
+//            "JOIN user_entity u ON b.user_seq = u.user_seq " +
+//            "WHERE u.user_seq = :userSeq " +
+//            "AND b.banking_date BETWEEN TO_DATE(:startDate, 'YYYY-MM-DD') AND TO_DATE(:endDate, 'YYYY-MM-DD') " +
+//            "AND b.type = '지출' "+
+//            "GROUP BY b.category " +
+//            "ORDER BY TOTAL DESC" , nativeQuery = true)
+//    List<Map<String, Integer>> readCategoryProportion(
+//            @Param("startDate") LocalDate startDate,
+//            @Param("endDate") LocalDate endDate,
+//            @Param("userSeq") Long userSeq);
 
     @Query(value = "SELECT b.* " +
             "FROM banking b " +
@@ -34,8 +54,6 @@ public interface BankingRepository extends JpaRepository<Banking, Long> {
             @Param("startDate") String startDate,
             @Param("endDate") String endDate,
             @Param("userSeq") Long userSeq
-
-
     );
     List<Banking> findAllByOwnerAndTypeAndCategory(User theUser, String type, String category);
     List<Banking> findAllByOwnerAndCategoryAndTypeIn(User theUser, String category, List<String> types);
