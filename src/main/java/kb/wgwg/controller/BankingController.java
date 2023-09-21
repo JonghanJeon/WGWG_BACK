@@ -207,6 +207,7 @@ public class BankingController {
             result.setSuccess(false);
             return ResponseEntity.badRequest().body(result);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             result.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
             result.setStatus(StatusCode.INTERNAL_SERVER_ERROR);
             result.setSuccess(false);

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -171,13 +172,32 @@ public class BankingService {
                 () -> new EntityNotFoundException()
         );
 
+<<<<<<< Updated upstream
         List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
         List<Banking> outputBankingList = bankingRepository.findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
+=======
+        List<Banking> outputBankingList = bankingRepository.
+                findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
+>>>>>>> Stashed changes
 
-        int totalAmount = inputBankingList.stream().mapToInt(Banking::getAmount).sum();
-        System.out.println("***" + totalAmount);
-        int outputAmount = outputBankingList.stream().mapToInt(Banking::getAmount).sum();
-        System.out.println("*****" + outputAmount);
-        return totalAmount - outputAmount;
+        int outputAmountInCompleteChallenge = outputBankingList.stream().filter(
+                banking -> {
+                    if (banking.getChallengeId() == null) return false;
+                    Challenge theChallenge = challengeRepository.findById(banking.getChallengeId()).orElseThrow(
+                            () -> new EntityNotFoundException()
+                    );
+
+                    return theChallenge.getStatus().equals("완료");
+                }
+        ).mapToInt(Banking::getAmount).sum();
+
+        if (outputAmountInCompleteChallenge != 0) {
+            List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
+            int totalAmount = inputBankingList.stream().mapToInt(Banking::getAmount).sum();
+
+            return totalAmount - outputAmountInCompleteChallenge;
+        }
+
+        return outputAmountInCompleteChallenge;
     }
 }
