@@ -172,13 +172,8 @@ public class BankingService {
                 () -> new EntityNotFoundException()
         );
 
-<<<<<<< Updated upstream
-        List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
-        List<Banking> outputBankingList = bankingRepository.findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
-=======
         List<Banking> outputBankingList = bankingRepository.
                 findAllByOwnerAndCategoryAndTypeIn(theUser, "챌린지", types);
->>>>>>> Stashed changes
 
         int outputAmountInCompleteChallenge = outputBankingList.stream().filter(
                 banking -> {
