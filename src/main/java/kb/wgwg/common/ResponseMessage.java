@@ -31,7 +31,7 @@ public class ResponseMessage {
 
 
     //가계부
-    public static final String READ_CATEGORY_SUCCESS = "카테고리 조회 성공";
+    public static final String READ_CATEGORY_SUCCESS = "카테고리 차트 조회 성공";
     public static final String READ_TOTAL_SUCCESS = "가계부 수입/지출 누적 금액 조회 성공";
     
     public static final String BANKING_INSERT_SUCCESS = "입출금 등록 성공";

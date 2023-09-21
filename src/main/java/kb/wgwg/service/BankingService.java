@@ -8,6 +8,7 @@ import kb.wgwg.repository.ChallengeUserRepository;
 import kb.wgwg.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -100,20 +99,53 @@ public class BankingService {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public List<ReadCategoryResponseDTO> readCategoryProportion(ReadCategoryRequestDTO dto) {
+//    public List<ReadCategoryResponseDTO> readCategoryProportion(ReadCategoryRequestDTO dto) {
+//        User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
+//                () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
+//        );
+//        List<Object[]> list = bankingRepository.readCategoryProportion(dto.getUserSeq(), dto.getCheckMonth()+"-01");
+//
+//        List<ReadCategoryResponseDTO> result = new ArrayList<>();
+//        for(Object[] li : list){
+//            ReadCategoryResponseDTO responseDTO = new ReadCategoryResponseDTO();
+//            responseDTO.setCategory((String) li[0]);
+//            responseDTO.setTotal(((BigDecimal) li[1]).intValue());
+//            result.add(responseDTO);
+//        }
+//        return result;
+//    }
+
+//    public List<Map<String, Object>> transformToNivoPieChartData(List<Object[]> categoryProportions) {
+//        List<Map<String, Object>> pieChartData = new ArrayList<>();
+//
+//        for (Object[] categoryProportion : categoryProportions) {
+//            Map<String, Object> dataPoint = new HashMap<>();
+//            dataPoint.put("id", (String) categoryProportion[0]);
+//            dataPoint.put("label", (String) categoryProportion[0]);
+//            dataPoint.put("value", ((BigDecimal) categoryProportion[1]).intValue());
+//            pieChartData.add(dataPoint);
+//        }
+//
+//        return pieChartData;
+//    }
+
+    public List<Map<String, Integer>> readCategoryProportion(ReadCategoryRequestDTO dto) {
         User user = userRepository.findById(dto.getUserSeq()).orElseThrow(
                 () -> new EntityNotFoundException("사용자를 찾을 수 없습니다.")
         );
-        List<Object[]> list = bankingRepository.readCategoryProportion(dto.getUserSeq(), dto.getCheckMonth()+"-01");
 
-        List<ReadCategoryResponseDTO> result = new ArrayList<>();
-        for(Object[] li : list){
-            ReadCategoryResponseDTO responseDTO = new ReadCategoryResponseDTO();
-            responseDTO.setCategory((String) li[0]);
-            responseDTO.setTotal(((BigDecimal) li[1]).intValue());
-            result.add(responseDTO);
-        }
-        return result;
+        YearMonth yearMonth = YearMonth.from(dto.getCheckMonth()); // 해당 월을 추출
+
+        System.out.println(yearMonth);
+
+        String startDate = String.valueOf(yearMonth.atDay(1).atStartOfDay().toLocalDate()); // 해당 월의 시작일 (1일)
+        String endDate = String.valueOf(yearMonth.atEndOfMonth());
+        System.out.println(startDate+" "+endDate);
+
+//        List<Object[]> list = bankingRepository.readCategoryProportion(startDate, endDate, dto.getUserSeq());
+        List<Map<String, Integer>> list = bankingRepository.readCategoryProportion(startDate, endDate, dto.getUserSeq());
+        System.out.println("list : "+list);
+        return list;
     }
 
     public ReadTotalResponseDTO calculateTotalSpend(ReadTotalRequestDTO dto) {

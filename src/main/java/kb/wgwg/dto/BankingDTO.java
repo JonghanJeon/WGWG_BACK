@@ -64,26 +64,12 @@ public class BankingDTO {
     @NoArgsConstructor
     public static final class ReadCategoryRequestDTO {
         private Long userSeq;
-        private String checkMonth;
+        private LocalDateTime checkMonth;
 
         @Builder
-        public ReadCategoryRequestDTO(Long userSeq, String checkMonth){
+        public ReadCategoryRequestDTO(Long userSeq, LocalDateTime checkMonth){
             this.userSeq = userSeq;
             this.checkMonth = checkMonth;
-        }
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static final class ReadCategoryResponseDTO {
-        private String category;
-        private int total;
-
-        @Builder
-        public ReadCategoryResponseDTO(String category, int total){
-            this.category = category;
-            this.total = total;
         }
     }
 
