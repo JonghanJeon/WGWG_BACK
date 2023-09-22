@@ -214,16 +214,19 @@ public class BankingService {
                             () -> new EntityNotFoundException()
                     );
 
-                    return theChallenge.getStatus().equals("완료");
+                    return theChallenge.getStatus().equals("종료");
                 }
         ).mapToInt(Banking::getAmount).sum();
 
+        List<Banking> inputBankingList = null;
         if (outputAmountInCompleteChallenge != 0) {
-            List<Banking> inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
+            inputBankingList = bankingRepository.findAllByOwnerAndTypeAndCategory(theUser, "입금", "챌린지");
             int totalAmount = inputBankingList.stream().mapToInt(Banking::getAmount).sum();
 
+            System.out.println(inputBankingList);
             return totalAmount - outputAmountInCompleteChallenge;
         }
+
 
         return outputAmountInCompleteChallenge;
     }
