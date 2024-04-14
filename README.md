@@ -16,7 +16,7 @@
 
 ![image](https://github.com/JonghanJeon/WGWG_BACK/assets/117141827/08de78cb-fc04-48a3-b1f3-24d210179efb)
 
-## Front URL
+## Front Repository
 
 https://github.com/JonghanJeon/WGWG_FRONT
 
